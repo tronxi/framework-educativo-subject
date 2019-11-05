@@ -1,0 +1,13 @@
+spring:
+  datasource:
+    username: pi
+    password: servidortfg
+  application:
+    name: "subject"
+  cloud:
+    client:
+      hostname: http://192.168.1.48
+server:
+  port: 8082
+comun: application
+environment: defecto
