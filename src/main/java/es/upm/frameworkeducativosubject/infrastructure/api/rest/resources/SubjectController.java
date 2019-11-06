@@ -3,6 +3,7 @@ package es.upm.frameworkeducativosubject.infrastructure.api.rest.resources;
 import es.upm.frameworkeducativosubject.infrastructure.api.rest.adapter.SubjectAdapter;
 import es.upm.frameworkeducativosubject.infrastructure.api.rest.model.SubjectDTO;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
@@ -22,7 +23,7 @@ public class SubjectController {
     }
 
     @PreAuthorize("hasRole('ADMIN')")
-    @GetMapping()
+    @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<SubjectDTO> getSubject(@RequestParam String id) {
         return subjectAdapter.getSubjectByIdAdapter(id);
     }
