@@ -6,7 +6,7 @@ spring:
     name: "subject"
   cloud:
     client:
-      hostname: http://192.168.1.48
+      hostname: http://raspberrytronxi.ddns.net
 server:
   port: 8082
 comun: application
