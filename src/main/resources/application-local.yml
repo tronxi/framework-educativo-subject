@@ -1,18 +1,18 @@
-#spring:
-#  datasource:
-#    url: jdbc:h2:mem:h2prueba
-#    driverClassName: org.h2.Driver
-#  h2:
-#    console:
-#        path: /h2-console
-#  jpa:
-#    database-platform: org.hibernate.dialect.H2Dialect
+spring:
+  datasource:
+    url: jdbc:h2:mem:subject
+    driverClassName: org.h2.Driver
+  h2:
+    console:
+        path: /h2-console
+  jpa:
+    database-platform: org.hibernate.dialect.H2Dialect
 server:
   port: 8083
 environment: local
 eureka:
   instance:
-    #status-page-url-path: ${spring.cloud.client.hostname}:${server.port}/swagger-ui.html
+    status-page-url-path: http://localhost:${server.port}/swagger-ui.html
     leaseRenewalIntervalInSeconds: 1
     leaseExpirationDurationInSeconds: 2
   client:

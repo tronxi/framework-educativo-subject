@@ -6,7 +6,7 @@
 environment: dev
 eureka:
   instance:
-    #status-page-url-path: ${spring.cloud.client.hostname}:${server.port}/swagger-ui.html
+    status-page-url-path: ${spring.cloud.client.hostname}:${server.port}/swagger-ui.html
     leaseRenewalIntervalInSeconds: 1
     leaseExpirationDurationInSeconds: 2
   client:
