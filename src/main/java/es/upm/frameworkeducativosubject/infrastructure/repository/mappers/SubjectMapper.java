@@ -17,7 +17,7 @@ public interface SubjectMapper {
             "(#{name}, #{year})")
     void saveSubject(String name, String year);
 
-    @Update("update SUBJECT set NAME = #{name}, YEAR = #{year}, " +
+    @Update("update SUBJECT set NAME = #{name}, YEAR = #{year} " +
             "where ID_SUBJECT = #{id}")
     void updateSubject(String id, String name, String year);
 
