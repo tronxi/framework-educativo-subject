@@ -9,8 +9,8 @@ import org.apache.ibatis.annotations.Update;
 @Mapper
 public interface SubjectMapper {
 
-    @Select("select ID_SUBJECT, NAME, YEAR" +
-            "FROM SUBJECT WHERE ID = #{id}")
+    @Select("select ID_SUBJECT, NAME, YEAR  " +
+            "FROM SUBJECT WHERE ID_SUBJECT = #{id}")
     SubjectDAO getSubjectById(String id);
 
     @Select("insert into SUBJECT (NAME, YEAR) VALUES" +
