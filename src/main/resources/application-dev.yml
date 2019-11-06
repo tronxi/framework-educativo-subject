@@ -1,8 +1,8 @@
-#spring:
-#  datasource:
-#    url: jdbc:mysql://raspberrytronxi.ddns.net:3306/framework-educativo-dev?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC
-#    driver-class-name: com.mysql.jdbc.Driver
-#    initialization-mode: embedded
+spring:
+  datasource:
+    url: jdbc:mysql://raspberrytronxi.ddns.net:3306/framework-educativo-subject-dev?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC
+    driver-class-name: com.mysql.jdbc.Driver
+    initialization-mode: embedded
 environment: dev
 eureka:
   instance:
