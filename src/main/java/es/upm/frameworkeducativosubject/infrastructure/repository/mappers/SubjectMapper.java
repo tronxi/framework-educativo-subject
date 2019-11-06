@@ -21,7 +21,7 @@ public interface SubjectMapper {
             "where ID_SUBJECT = #{id}")
     void updateSubject(String id, String name, String year);
 
-    @Delete("delete from USER where ID_SUBJECT = #{id}")
+    @Delete("delete from SUBJECT where ID_SUBJECT = #{id}")
     void deleteSubjectById(String id);
 
 }
