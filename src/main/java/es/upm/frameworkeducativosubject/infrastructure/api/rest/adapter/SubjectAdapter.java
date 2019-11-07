@@ -29,8 +29,7 @@ public class SubjectAdapter {
 
     public ResponseEntity subjectLoadAdapter(SubjectDTO subjectDTO) {
         Subject subject = subjectDTOToSubject(subjectDTO);
-        loadSubjectService.loadSubject(subject);
-        return new ResponseEntity(HttpStatus.CREATED);
+        return new ResponseEntity(loadSubjectService.loadSubject(subject));
     }
 
     public ResponseEntity updateSubjectAdapter(SubjectDTO subjectDTO) {
