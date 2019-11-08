@@ -13,6 +13,10 @@ public interface SubjectMapper {
             "FROM SUBJECT WHERE ID_SUBJECT = #{id}")
     SubjectDAO getSubjectById(String id);
 
+    @Select("select ID_SUBJECT, NAME, YEAR  " +
+            "FROM SUBJECT WHERE NAME = #{name} and YEAR = #{year}")
+    SubjectDAO getSubjectByNameYear(String name, String year);
+
     @Select("insert into SUBJECT (NAME, YEAR) VALUES" +
             "(#{name}, #{year})")
     void saveSubject(String name, String year);

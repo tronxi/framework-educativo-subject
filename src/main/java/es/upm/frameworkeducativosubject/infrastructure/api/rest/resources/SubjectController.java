@@ -2,6 +2,7 @@ package es.upm.frameworkeducativosubject.infrastructure.api.rest.resources;
 
 import es.upm.frameworkeducativosubject.infrastructure.api.rest.adapter.SubjectAdapter;
 import es.upm.frameworkeducativosubject.infrastructure.api.rest.model.SubjectDTO;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -23,9 +24,15 @@ public class SubjectController {
     }
 
     @PreAuthorize("hasRole('ADMIN')")
-    @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE, params = {"id"})
     public ResponseEntity<SubjectDTO> getSubject(@RequestParam String id) {
         return subjectAdapter.getSubjectByIdAdapter(id);
+    }
+
+    @PreAuthorize("hasRole('ADMIN')")
+    @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE, params = {"name", "year"})
+    public ResponseEntity<SubjectDTO> getSubject(@RequestParam String name, @RequestParam String year) {
+        return subjectAdapter.getSubjectByNameYear(name, year);
     }
 
     @PreAuthorize("hasRole('ADMIN')")

@@ -16,4 +16,9 @@ public class FindSubjectServiceImpl implements FindSubjectService {
     public Subject findSubjectById(String id) {
         return subjectRepository.getSubjectById(id);
     }
+
+    @Override
+    public Subject findSubjectByNameYear(String name, String year) {
+        return subjectRepository.getSubjectByNameYear(name, year);
+    }
 }

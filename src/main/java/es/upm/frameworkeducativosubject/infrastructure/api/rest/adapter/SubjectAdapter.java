@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import sun.security.provider.certpath.OCSPResponse;
 
 @Service
 public class SubjectAdapter {
@@ -39,6 +40,12 @@ public class SubjectAdapter {
 
     public ResponseEntity<SubjectDTO> getSubjectByIdAdapter(String id) {
         Subject subject = findSubjectService.findSubjectById(id);
+        SubjectDTO subjectDTO = subjectToSubjectDTO(subject);
+        return new ResponseEntity<>(subjectDTO, HttpStatus.OK);
+    }
+
+    public ResponseEntity<SubjectDTO> getSubjectByNameYear(String name, String year) {
+        Subject subject = findSubjectService.findSubjectByNameYear(name, year);
         SubjectDTO subjectDTO = subjectToSubjectDTO(subject);
         return new ResponseEntity<>(subjectDTO, HttpStatus.OK);
     }

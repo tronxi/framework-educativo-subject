@@ -19,6 +19,11 @@ public class SubjectRepository implements ISubjectRepository {
         return subjectDAOToSubject(subjectMapper.getSubjectById(id));
     }
 
+    @Override
+    public Subject getSubjectByNameYear(String name, String year) {
+        return subjectDAOToSubject(subjectMapper.getSubjectByNameYear(name, year));
+    }
+
 
     @Override
     public void saveSubject(Subject subject) throws Exception {
