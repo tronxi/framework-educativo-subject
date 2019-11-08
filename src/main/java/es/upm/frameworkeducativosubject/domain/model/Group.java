@@ -4,14 +4,11 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 
-import java.util.List;
-
 @AllArgsConstructor
 @Data
 @Builder
-public class Subject {
+public class Group {
     private String id_subject;
+    private String id_group;
     private String name;
-    private String year;
-    private List<Group> groups;
 }

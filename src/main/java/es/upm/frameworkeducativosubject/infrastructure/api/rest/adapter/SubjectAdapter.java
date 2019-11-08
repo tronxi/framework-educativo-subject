@@ -59,6 +59,7 @@ public class SubjectAdapter {
                 .idSubject(subject.getId_subject())
                 .name(subject.getName())
                 .year(subject.getYear())
+                .groups(subject.getGroups())
                 .build();
     }
 
@@ -67,6 +68,7 @@ public class SubjectAdapter {
                 .id_subject(subjectDTO.getIdSubject())
                 .name(subjectDTO.getName())
                 .year(subjectDTO.getYear())
+                .groups(subjectDTO.getGroups())
                 .build();
     }
 }
