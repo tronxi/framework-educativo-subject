@@ -4,6 +4,7 @@ import es.upm.frameworkeducativosubject.domain.model.Group;
 import es.upm.frameworkeducativosubject.domain.port.secundary.IGroupRepository;
 import es.upm.frameworkeducativosubject.infrastructure.repository.mappers.GroupMapper;
 import es.upm.frameworkeducativosubject.infrastructure.repository.model.GroupDAO;
+import org.apache.ibatis.exceptions.PersistenceException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
@@ -21,6 +22,24 @@ public class GroupRepository implements IGroupRepository {
         return groupMapper.getGroupBySubjectId(subject_id).stream()
                 .map(this::groupDAOToGroup)
                 .collect(Collectors.toList());
+    }
+
+    @Override
+    public void deleteGroupById(String group_id) throws Exception {
+        try {
+            groupMapper.deleteGroupById(group_id);
+        } catch (PersistenceException e) {
+            throw new Exception("ex");
+        }
+    }
+
+    @Override
+    public void deleteGroupsBySubjectId(String subject_id) throws Exception {
+        try {
+            groupMapper.deleteGroupBySubjectId(subject_id);
+        } catch (PersistenceException e) {
+            throw new Exception("ex");
+        }
     }
 
     private Group groupDAOToGroup(GroupDAO groupDAO) {
