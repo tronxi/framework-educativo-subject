@@ -42,6 +42,11 @@ public class GroupRepository implements IGroupRepository {
         }
     }
 
+    @Override
+    public void saveGroup(String name, String subject_id) throws Exception {
+
+    }
+
     private Group groupDAOToGroup(GroupDAO groupDAO) {
         return Group.builder()
                 .id_group(groupDAO.getId_group())
