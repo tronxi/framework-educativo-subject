@@ -25,12 +25,9 @@ public class GroupRepository implements IGroupRepository {
     }
 
     @Override
-    public void deleteGroupById(String group_id) throws Exception {
-        try {
-            groupMapper.deleteGroupById(group_id);
-        } catch (PersistenceException e) {
-            throw new Exception("ex");
-        }
+    public Group deleteGroupById(String group_id) {
+        groupMapper.deleteGroupById(group_id);
+        return Group.builder().id_subject(group_id).build();
     }
 
     @Override
@@ -43,8 +40,11 @@ public class GroupRepository implements IGroupRepository {
     }
 
     @Override
-    public void saveGroup(String name, String subject_id) throws Exception {
-
+    public Group saveGroup(String name, String subject_id) {
+        return Group.builder()
+                .name(name)
+                .id_subject(subject_id)
+                .build();
     }
 
     private Group groupDAOToGroup(GroupDAO groupDAO) {
