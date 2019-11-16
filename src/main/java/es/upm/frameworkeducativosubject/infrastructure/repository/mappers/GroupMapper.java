@@ -20,7 +20,7 @@ public interface GroupMapper {
     @Delete("delete from GROUPS where ID_SUBJECT = #{subject_id}")
     void deleteGroupBySubjectId(String subject_id);
 
-    @Select("insert into GROUPS (NAME, ID_SUBJECT) VALUES " +
-            "(#{name}, #{year})")
+    @Select("insert into GROUPS (NAME_GROUP, ID_SUBJECT) VALUES " +
+            "(#{name}, #{subject_id})")
     void loadGroup(String name, String subject_id);
 }
