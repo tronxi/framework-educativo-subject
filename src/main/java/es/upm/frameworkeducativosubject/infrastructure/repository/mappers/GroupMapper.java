@@ -4,7 +4,6 @@ import es.upm.frameworkeducativosubject.infrastructure.repository.model.GroupDAO
 import org.apache.ibatis.annotations.Delete;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
-import org.apache.ibatis.annotations.Update;
 
 import java.util.List;
 
@@ -21,6 +20,7 @@ public interface GroupMapper {
     @Delete("delete from GROUPS where ID_SUBJECT = #{subject_id}")
     void deleteGroupBySubjectId(String subject_id);
 
-    @Update("")
+    @Select("insert into GROUPS (NAME, ID_SUBJECT) VALUES " +
+            "(#{name}, #{year})")
     void loadGroup(String name, String subject_id);
 }

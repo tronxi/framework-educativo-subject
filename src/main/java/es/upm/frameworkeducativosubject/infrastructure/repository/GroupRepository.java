@@ -41,6 +41,7 @@ public class GroupRepository implements IGroupRepository {
 
     @Override
     public Group saveGroup(String name, String subject_id) {
+        groupMapper.loadGroup(name, subject_id);
         return Group.builder()
                 .name(name)
                 .id_subject(subject_id)
