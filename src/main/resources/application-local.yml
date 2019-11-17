@@ -27,3 +27,8 @@ eureka:
       enabled: true
     lease:
       duration: 5
+hystrix:
+  shareSecurityContext: true
+feign:
+  hystrix:
+    enabled: true

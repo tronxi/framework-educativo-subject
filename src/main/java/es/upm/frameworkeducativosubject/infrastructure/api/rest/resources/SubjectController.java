@@ -2,7 +2,6 @@ package es.upm.frameworkeducativosubject.infrastructure.api.rest.resources;
 
 import es.upm.frameworkeducativosubject.infrastructure.api.rest.adapter.SubjectAdapter;
 import es.upm.frameworkeducativosubject.infrastructure.api.rest.model.SubjectDTO;
-import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -39,6 +38,12 @@ public class SubjectController {
     @PutMapping()
     public ResponseEntity updateSubject(@RequestBody SubjectDTO subjectDTO) {
         return subjectAdapter.updateSubjectAdapter(subjectDTO);
+    }
+
+    @PreAuthorize("hasRole('ADMIN')")
+    @PostMapping(value = "{idSubject}/teacher/{ident}")
+    public ResponseEntity setTeacher(@PathVariable String idSubject, @PathVariable String ident) {
+        return subjectAdapter.setTeacher(idSubject, ident);
     }
 
     @PreAuthorize("hasRole('ADMIN')")

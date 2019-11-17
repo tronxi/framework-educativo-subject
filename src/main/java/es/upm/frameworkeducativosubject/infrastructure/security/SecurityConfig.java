@@ -1,6 +1,8 @@
 package es.upm.frameworkeducativosubject.infrastructure.security;
 
+import es.upm.frameworkeducativosubject.infrastructure.security.filter.AuthorizationFilter;
 import es.upm.frameworkeducativosubject.infrastructure.security.filter.JwtAuthorizationFilter;
+import feign.RequestInterceptor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -65,5 +67,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Bean
     public JwtAuthorizationFilter jwtAuthorizationFilter() throws Exception {
         return new JwtAuthorizationFilter(this.authenticationManager());
+    }
+
+    @Bean
+    public RequestInterceptor securityFeignRequestInterceptor() {
+        return new AuthorizationFilter();
     }
 }

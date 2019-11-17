@@ -2,10 +2,7 @@ package es.upm.frameworkeducativosubject.infrastructure.api.rest.adapter;
 
 import es.upm.frameworkeducativosubject.domain.model.Group;
 import es.upm.frameworkeducativosubject.domain.model.Subject;
-import es.upm.frameworkeducativosubject.domain.port.primary.DeleteSubjectService;
-import es.upm.frameworkeducativosubject.domain.port.primary.FindSubjectService;
-import es.upm.frameworkeducativosubject.domain.port.primary.LoadSubjectService;
-import es.upm.frameworkeducativosubject.domain.port.primary.UpdateSubjectService;
+import es.upm.frameworkeducativosubject.domain.port.primary.*;
 import es.upm.frameworkeducativosubject.infrastructure.api.rest.model.GroupDTO;
 import es.upm.frameworkeducativosubject.infrastructure.api.rest.model.SubjectDTO;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,6 +29,9 @@ public class SubjectAdapter {
     @Autowired
     private DeleteSubjectService deleteSubjectService;
 
+    @Autowired
+    private TeacherService teacherService;
+
 
     public ResponseEntity subjectLoadAdapter(SubjectDTO subjectDTO) {
         Subject subject = subjectDTOToSubject(subjectDTO);
@@ -57,6 +57,10 @@ public class SubjectAdapter {
 
     public ResponseEntity deleteSubjectById(String id) {
         return new ResponseEntity(deleteSubjectService.deleteSubject(id));
+    }
+
+    public ResponseEntity setTeacher(String idSubject, String ident) {
+        return new ResponseEntity(teacherService.setTeacher(idSubject, ident));
     }
 
     private SubjectDTO subjectToSubjectDTO(Subject subject) {
