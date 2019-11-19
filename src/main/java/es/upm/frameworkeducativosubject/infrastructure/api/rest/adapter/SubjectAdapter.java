@@ -59,8 +59,8 @@ public class SubjectAdapter {
         return new ResponseEntity(deleteSubjectService.deleteSubject(id));
     }
 
-    public ResponseEntity setTeacher(String idSubject, String ident) {
-        return new ResponseEntity(teacherService.setTeacher(idSubject, ident));
+    public ResponseEntity setTeacher(String idSubject, String ident, String header) {
+        return new ResponseEntity(teacherService.setTeacher(idSubject, ident, header));
     }
 
     private SubjectDTO subjectToSubjectDTO(Subject subject) {

@@ -14,9 +14,8 @@ public class UserRepository implements IUserRepository {
     private UserMapper userMapper;
 
     @Override
-    public User getUserByIdent(String ident) {
-        User user = userDTOtoUser(userMapper.getUserByIdent(ident));
-        return user;
+    public User getUserByIdent(String ident, String header) {
+        return userDTOtoUser(userMapper.getUserByIdent(ident, header).getBody());
     }
 
     private User userDTOtoUser(UserDAO userDAO) {

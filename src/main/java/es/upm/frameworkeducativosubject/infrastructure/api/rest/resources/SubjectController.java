@@ -42,8 +42,9 @@ public class SubjectController {
 
     @PreAuthorize("hasRole('ADMIN')")
     @PostMapping(value = "{idSubject}/teacher/{ident}")
-    public ResponseEntity setTeacher(@PathVariable String idSubject, @PathVariable String ident) {
-        return subjectAdapter.setTeacher(idSubject, ident);
+    public ResponseEntity setTeacher(@PathVariable String idSubject, @PathVariable String ident,
+                                     @RequestHeader("authorization") String header) {
+        return subjectAdapter.setTeacher(idSubject, ident, header);
     }
 
     @PreAuthorize("hasRole('ADMIN')")

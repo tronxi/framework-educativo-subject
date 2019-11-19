@@ -9,6 +9,7 @@ eureka:
     status-page-url-path: ${spring.cloud.client.hostname}:${server.port}/swagger-ui.html
     leaseRenewalIntervalInSeconds: 1
     leaseExpirationDurationInSeconds: 2
+    hostname: subject
   client:
     serviceUrl:
       defaultZone: http://raspberrytronxi2.ddns.net:8762/eureka/
