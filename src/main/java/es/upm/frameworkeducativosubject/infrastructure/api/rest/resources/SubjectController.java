@@ -9,7 +9,7 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("subject")
+@RequestMapping()
 @PreAuthorize("authenticated")
 public class SubjectController {
 
@@ -17,25 +17,25 @@ public class SubjectController {
     private SubjectAdapter subjectAdapter;
 
     @PreAuthorize("hasRole('ADMIN')")
-    @PostMapping()
+    @PostMapping(value = "subject")
     public ResponseEntity loadSubject(@RequestBody SubjectDTO subjectDTO) {
         return subjectAdapter.subjectLoadAdapter(subjectDTO);
     }
 
     @PreAuthorize("hasRole('ADMIN')")
-    @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE, params = {"id"})
+    @GetMapping(value = "subject", produces = MediaType.APPLICATION_JSON_VALUE, params = {"id"})
     public ResponseEntity<SubjectDTO> getSubject(@RequestParam String id) {
         return subjectAdapter.getSubjectByIdAdapter(id);
     }
 
     @PreAuthorize("hasRole('ADMIN')")
-    @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE, params = {"name", "year"})
+    @GetMapping(value = "subject", produces = MediaType.APPLICATION_JSON_VALUE, params = {"name", "year"})
     public ResponseEntity<SubjectDTO> getSubject(@RequestParam String name, @RequestParam String year) {
         return subjectAdapter.getSubjectByNameYear(name, year);
     }
 
     @PreAuthorize("hasRole('ADMIN')")
-    @PutMapping()
+    @PutMapping("subject")
     public ResponseEntity updateSubject(@RequestBody SubjectDTO subjectDTO) {
         return subjectAdapter.updateSubjectAdapter(subjectDTO);
     }
