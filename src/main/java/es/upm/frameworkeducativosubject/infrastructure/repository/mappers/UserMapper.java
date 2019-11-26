@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 @FeignClient(name = "user", fallback = UserMapper.UserMapperFallback.class)
 public interface UserMapper {
 
-    @GetMapping("/user")
+    @GetMapping("/user-service/user")
     ResponseEntity<UserDAO> getUserByIdent(@RequestParam String ident,
                                            @RequestHeader("authorization") String header);
 
