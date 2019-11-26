@@ -14,6 +14,7 @@ spring:
     initialization-mode: embedded
 server:
   port: 8083
+
 environment: local
 eureka:
   instance:
@@ -22,7 +23,7 @@ eureka:
     leaseExpirationDurationInSeconds: 2
   client:
     serviceUrl:
-      defaultZone: http://localhost:8761/eureka/
+      defaultZone: https://localhost:8761/eureka/
     healthcheck:
       enabled: true
     lease:
