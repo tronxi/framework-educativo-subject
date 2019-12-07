@@ -1,7 +1,7 @@
 spring:
   datasource:
     username: pi
-    password: servidortfg
+    password: ENC(+Tb6CL+hH5md5GjPcqoz2PRUrl2KopUp)
   application:
     name: subject
   cloud:
