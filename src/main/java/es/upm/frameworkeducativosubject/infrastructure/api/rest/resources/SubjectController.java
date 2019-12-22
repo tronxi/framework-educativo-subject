@@ -34,6 +34,9 @@ public class SubjectController {
         return subjectAdapter.getSubjectByNameYear(name, year);
     }
 
+    @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE, value = "/{idSubject}/teacher/{ident}")
+
+
     @PreAuthorize("hasRole('ADMIN')")
     @PutMapping()
     public ResponseEntity updateSubject(@RequestBody SubjectDTO subjectDTO) {
