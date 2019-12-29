@@ -23,13 +23,12 @@ public class UpdateSubjectServiceImpl implements UpdateSubjectService {
 
 
     @Override
-    public HttpStatus updateSubject (Subject subject) {
+    public void updateSubject (Subject subject) throws Exception{
         try {
             subjectRepository.updateSubject(subject);
             updateGroups(subject);
-            return HttpStatus.OK;
         } catch (Exception e) {
-            return HttpStatus.BAD_REQUEST;
+            throw new Exception();
         }
     }
     private void updateGroups(Subject subject) {

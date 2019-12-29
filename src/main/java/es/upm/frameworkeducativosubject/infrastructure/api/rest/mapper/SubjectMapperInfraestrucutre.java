@@ -1,4 +1,4 @@
-package es.upm.frameworkeducativosubject.infrastructure.api.rest.adapter;
+package es.upm.frameworkeducativosubject.infrastructure.api.rest.mapper;
 
 import es.upm.frameworkeducativosubject.domain.model.Group;
 import es.upm.frameworkeducativosubject.domain.model.Subject;
@@ -9,13 +9,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
-import sun.security.provider.certpath.OCSPResponse;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
-public class SubjectAdapter {
+public class SubjectMapperInfraestrucutre {
 
     @Autowired
     private LoadSubjectService loadSubjectService;
@@ -35,12 +34,22 @@ public class SubjectAdapter {
 
     public ResponseEntity subjectLoadAdapter(SubjectDTO subjectDTO) {
         Subject subject = subjectDTOToSubject(subjectDTO);
-        return new ResponseEntity(loadSubjectService.loadSubject(subject));
+        try {
+            loadSubjectService.loadSubject(subject);
+            return new ResponseEntity(HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity(HttpStatus.BAD_REQUEST);
+        }
     }
 
     public ResponseEntity updateSubjectAdapter(SubjectDTO subjectDTO) {
         Subject subject = subjectDTOToSubject(subjectDTO);
-        return new ResponseEntity(updateSubjectService.updateSubject(subject));
+        try {
+            updateSubjectService.updateSubject(subject);
+            return new ResponseEntity(HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity(HttpStatus.BAD_REQUEST);
+        }
     }
 
     public ResponseEntity<SubjectDTO> getSubjectByIdAdapter(String id) {
@@ -56,11 +65,21 @@ public class SubjectAdapter {
     }
 
     public ResponseEntity deleteSubjectById(String id) {
-        return new ResponseEntity(deleteSubjectService.deleteSubject(id));
+        try {
+            deleteSubjectService.deleteSubject(id);
+            return new ResponseEntity(HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity(HttpStatus.BAD_REQUEST);
+        }
     }
 
     public ResponseEntity setTeacher(String idSubject, String ident, String header) {
-        return new ResponseEntity(teacherService.setTeacher(idSubject, ident, header));
+        try {
+            teacherService.setTeacher(idSubject, ident, header);
+            return new ResponseEntity(HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity(HttpStatus.BAD_REQUEST);
+        }
     }
 
     private SubjectDTO subjectToSubjectDTO(Subject subject) {

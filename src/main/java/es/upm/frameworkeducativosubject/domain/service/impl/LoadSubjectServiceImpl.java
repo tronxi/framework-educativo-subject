@@ -4,7 +4,6 @@ import es.upm.frameworkeducativosubject.domain.model.Subject;
 import es.upm.frameworkeducativosubject.domain.port.primary.LoadSubjectService;
 import es.upm.frameworkeducativosubject.domain.port.secundary.ISubjectRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -14,12 +13,11 @@ public class LoadSubjectServiceImpl implements LoadSubjectService {
     ISubjectRepository subjectRepository;
 
     @Override
-    public HttpStatus loadSubject(Subject subject) {
+    public void loadSubject(Subject subject) throws Exception{
         try {
             subjectRepository.saveSubject(subject);
-            return HttpStatus.OK;
         } catch (Exception e) {
-            return HttpStatus.BAD_REQUEST;
+            throw new Exception();
         }
     }
 }

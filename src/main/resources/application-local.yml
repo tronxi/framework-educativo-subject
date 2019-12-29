@@ -18,7 +18,7 @@ server:
 environment: local
 eureka:
   instance:
-    status-page-url-path: http://localhost:${server.port}/swagger-ui.html
+    status-page-url-path: http://localhost:${server.port}/actuator/health
     leaseRenewalIntervalInSeconds: 1
     leaseExpirationDurationInSeconds: 2
   client:

@@ -4,7 +4,6 @@ import es.upm.frameworkeducativosubject.domain.port.primary.DeleteSubjectService
 import es.upm.frameworkeducativosubject.domain.port.secundary.IGroupRepository;
 import es.upm.frameworkeducativosubject.domain.port.secundary.ISubjectRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -17,13 +16,12 @@ public class DeleteSubjectServiceImpl implements DeleteSubjectService {
     IGroupRepository groupRepository;
 
     @Override
-    public HttpStatus deleteSubject(String id) {
+    public void deleteSubject(String id) throws Exception{
         try {
             subjectRepository.deleteSubjectById(id);
             groupRepository.deleteGroupsBySubjectId(id);
         } catch (Exception e) {
-            return  HttpStatus.BAD_REQUEST;
+            throw new Exception();
         }
-        return HttpStatus.OK;
     }
 }

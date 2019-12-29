@@ -4,5 +4,5 @@ import es.upm.frameworkeducativosubject.domain.model.Subject;
 import org.springframework.http.HttpStatus;
 
 public interface LoadSubjectService {
-    HttpStatus loadSubject(Subject subject);
+    void loadSubject(Subject subject) throws Exception;
 }

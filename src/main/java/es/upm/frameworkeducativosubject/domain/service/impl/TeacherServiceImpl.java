@@ -18,27 +18,25 @@ public class TeacherServiceImpl implements TeacherService {
     private IUserRepository userRepository;
 
     @Override
-    public HttpStatus setTeacher(String idSubject, String ident, String header) {
+    public void setTeacher(String idSubject, String ident, String header) throws Exception {
         try {
             User user = userRepository.getUserByIdent(ident, header);
             if (user.getRoles().contains("TEACHER")) {
                 teacherRepository.setTeacher(idSubject, user.getId_user());
             } else {
-                return  HttpStatus.BAD_REQUEST;
+                throw new Exception();
             }
-            return HttpStatus.OK;
         } catch (Exception e) {
-            return  HttpStatus.BAD_REQUEST;
+            throw new Exception();
         }
     }
 
     @Override
-    public HttpStatus deleteTeacher(String idSubject, String ident) {
+    public void deleteTeacher(String idSubject, String ident) throws Exception{
         try {
             teacherRepository.deleteTeacher(idSubject, ident);
-            return HttpStatus.OK;
         } catch (Exception e) {
-            return  HttpStatus.BAD_REQUEST;
+            throw new Exception();
         }
     }
 }
