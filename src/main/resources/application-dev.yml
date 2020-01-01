@@ -4,7 +4,7 @@ spring:
     driver-class-name: com.mysql.jdbc.Driver
     initialization-mode: embedded
 environment: dev
-eureka-host: http://raspberrytronxi2.ddns.net
+eureka-host: raspberrytronxi2.ddns.net
 eureka:
   instance:
     status-page-url-path: ${spring.cloud.client.hostname}:${server.port}/actuator/health
