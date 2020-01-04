@@ -43,7 +43,10 @@ class SubjectMapperInfrastructureTest extends Specification {
 
     def "subject load adapter" () {
         given:
-            SubjectDTO subjectDTO = SubjectDTO.builder().idSubject('2').name('a').groups(new ArrayList<GroupDTO>()).build()
+        List<GroupDTO> groupsDTO = new ArrayList<>()
+        groupsDTO.add(GroupDTO.builder().name("grupo").build())
+
+            SubjectDTO subjectDTO = SubjectDTO.builder().idSubject('2').name('a').groups(groupsDTO).build()
         when:
             ResponseEntity res = subjectMapperInfrastructure.subjectLoadAdapter(subjectDTO)
         then:
@@ -97,15 +100,22 @@ class SubjectMapperInfrastructureTest extends Specification {
         given:
         String name = "poo"
         String year = "2019"
+
+        List<Group> groups = new ArrayList<>()
+        groups.add(Group.builder().name("grupo").build())
+
+        List<GroupDTO> groupsDTO = new ArrayList<>()
+        groupsDTO.add(GroupDTO.builder().name("grupo").build())
+
         SubjectDTO subjectDTO = SubjectDTO.builder()
                 .name(name)
                 .year(year)
-                .groups(new ArrayList<GroupDTO>())
+                .groups(groupsDTO)
                 .build()
         findSubjectService.findSubjectByNameYear(name, year) >> Subject.builder()
                 .name(name)
                 .year(year)
-                .groups(new ArrayList<Group>())
+                .groups(groups)
                 .build()
         when:
         ResponseEntity<SubjectDTO> res = subjectMapperInfrastructure.getSubjectByNameYear(name, year)
@@ -142,5 +152,17 @@ class SubjectMapperInfrastructureTest extends Specification {
         ResponseEntity res = subjectMapperInfrastructure.setTeacher(idSubject, ident, header)
         then:
         res.getStatusCode() == HttpStatus.OK
+    }
+
+    def "set teacher with exception" () {
+        given:
+        String idSubject = "2"
+        String ident = "ident"
+        String header = "header"
+        when:
+        ResponseEntity res = subjectMapperInfrastructure.setTeacher(idSubject, ident, header)
+        then:
+        teacherService.setTeacher(idSubject, ident, header) >> {throw new Exception()}
+        res.getStatusCode() == HttpStatus.BAD_REQUEST
     }
 }

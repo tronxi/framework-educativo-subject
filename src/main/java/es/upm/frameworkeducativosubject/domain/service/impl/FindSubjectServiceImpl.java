@@ -13,15 +13,19 @@ import java.util.List;
 @Service
 public class FindSubjectServiceImpl implements FindSubjectService {
 
-    @Autowired
     ISubjectRepository subjectRepository;
 
-    @Autowired
     IGroupRepository groupRepository;
+
+    @Autowired
+    public FindSubjectServiceImpl(ISubjectRepository subjectRepository,
+                                  IGroupRepository groupRepository) {
+        this.subjectRepository = subjectRepository;
+        this.groupRepository = groupRepository;
+    }
 
     @Override
     public Subject findSubjectById(String id) {
-        //return subjectRepository.getSubjectById(id);
         Subject subject = subjectRepository.getSubjectById(id);
         List<Group> group = groupRepository.getGroupBySubjectId(subject.getId_subject());
         subject.setGroups(group);

@@ -9,11 +9,16 @@ import org.springframework.stereotype.Service;
 @Service
 public class DeleteSubjectServiceImpl implements DeleteSubjectService {
 
-    @Autowired
     ISubjectRepository subjectRepository;
 
-    @Autowired
     IGroupRepository groupRepository;
+
+    @Autowired
+    public DeleteSubjectServiceImpl(ISubjectRepository subjectRepository,
+                                    IGroupRepository groupRepository) {
+        this.subjectRepository = subjectRepository;
+        this.groupRepository = groupRepository;
+    }
 
     @Override
     public void deleteSubject(String id) throws Exception{
