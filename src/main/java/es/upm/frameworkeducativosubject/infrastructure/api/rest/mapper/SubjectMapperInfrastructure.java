@@ -14,22 +14,26 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
-public class SubjectMapperInfraestrucutre {
+public class SubjectMapperInfrastructure {
 
-    @Autowired
     private LoadSubjectService loadSubjectService;
-
-    @Autowired
     private FindSubjectService findSubjectService;
-
-    @Autowired
     private UpdateSubjectService updateSubjectService;
-
-    @Autowired
     private DeleteSubjectService deleteSubjectService;
+    private TeacherService teacherService;
 
     @Autowired
-    private TeacherService teacherService;
+    public SubjectMapperInfrastructure(LoadSubjectService loadSubjectService,
+                                       FindSubjectService findSubjectService,
+                                       UpdateSubjectService updateSubjectService,
+                                       DeleteSubjectService deleteSubjectService,
+                                       TeacherService teacherService) {
+        this.loadSubjectService = loadSubjectService;
+        this.findSubjectService = findSubjectService;
+        this.updateSubjectService = updateSubjectService;
+        this.deleteSubjectService = deleteSubjectService;
+        this.teacherService = teacherService;
+    }
 
 
     public ResponseEntity subjectLoadAdapter(SubjectDTO subjectDTO) {

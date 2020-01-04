@@ -1,6 +1,6 @@
 package es.upm.frameworkeducativosubject.infrastructure.api.rest.resources;
 
-import es.upm.frameworkeducativosubject.infrastructure.api.rest.mapper.SubjectMapperInfraestrucutre;
+import es.upm.frameworkeducativosubject.infrastructure.api.rest.mapper.SubjectMapperInfrastructure;
 import es.upm.frameworkeducativosubject.infrastructure.api.rest.model.SubjectDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
@@ -14,24 +14,24 @@ import org.springframework.web.bind.annotation.*;
 public class SubjectController {
 
     @Autowired
-    private SubjectMapperInfraestrucutre subjectMapperInfraestrucutre;
+    private SubjectMapperInfrastructure subjectMapperInfrastructure;
 
     @PreAuthorize("hasRole('ADMIN')")
     @PostMapping()
     public ResponseEntity loadSubject(@RequestBody SubjectDTO subjectDTO) {
-        return subjectMapperInfraestrucutre.subjectLoadAdapter(subjectDTO);
+        return subjectMapperInfrastructure.subjectLoadAdapter(subjectDTO);
     }
 
     @PreAuthorize("hasRole('ADMIN')")
     @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE, params = {"id"})
     public ResponseEntity<SubjectDTO> getSubject(@RequestParam String id) {
-        return subjectMapperInfraestrucutre.getSubjectByIdAdapter(id);
+        return subjectMapperInfrastructure.getSubjectByIdAdapter(id);
     }
 
     @PreAuthorize("hasRole('ADMIN')")
     @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE, params = {"name", "year"})
     public ResponseEntity<SubjectDTO> getSubject(@RequestParam String name, @RequestParam String year) {
-        return subjectMapperInfraestrucutre.getSubjectByNameYear(name, year);
+        return subjectMapperInfrastructure.getSubjectByNameYear(name, year);
     }
 
     @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE, value = "/{idSubject}/teacher/{ident}")
@@ -40,19 +40,19 @@ public class SubjectController {
     @PreAuthorize("hasRole('ADMIN')")
     @PutMapping()
     public ResponseEntity updateSubject(@RequestBody SubjectDTO subjectDTO) {
-        return subjectMapperInfraestrucutre.updateSubjectAdapter(subjectDTO);
+        return subjectMapperInfrastructure.updateSubjectAdapter(subjectDTO);
     }
 
     @PreAuthorize("hasRole('ADMIN')")
     @PostMapping(value = "/{idSubject}/teacher/{ident}")
     public ResponseEntity setTeacher(@PathVariable String idSubject, @PathVariable String ident,
                                      @RequestHeader("authorization") String header) {
-        return subjectMapperInfraestrucutre.setTeacher(idSubject, ident, header);
+        return subjectMapperInfrastructure.setTeacher(idSubject, ident, header);
     }
 
     @PreAuthorize("hasRole('ADMIN')")
     @DeleteMapping()
     public ResponseEntity deleteSubject(@RequestParam String id) {
-        return subjectMapperInfraestrucutre.deleteSubjectById(id);
+        return subjectMapperInfrastructure.deleteSubjectById(id);
     }
 }
