@@ -111,6 +111,6 @@ class SubjectMapperInfrastructureTest extends Specification {
         ResponseEntity<SubjectDTO> res = subjectMapperInfrastructure.getSubjectByNameYear(name, year)
         then:
         res.getStatusCode() == HttpStatus.OK
-        res.getBody() != subjectDTO
+        res.getBody() == subjectDTO
     }
 }
