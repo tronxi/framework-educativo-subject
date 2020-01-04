@@ -113,4 +113,34 @@ class SubjectMapperInfrastructureTest extends Specification {
         res.getStatusCode() == HttpStatus.OK
         res.getBody() == subjectDTO
     }
+
+    def "delete subject by id" () {
+        given:
+        String id = "2"
+        when:
+        ResponseEntity<SubjectDTO> res = subjectMapperInfrastructure.deleteSubjectById(id)
+        then:
+        res.getStatusCode() == HttpStatus.OK
+    }
+
+    def "delete subject by id with exception" () {
+        given:
+        String id = "2"
+        when:
+        ResponseEntity<SubjectDTO> res = subjectMapperInfrastructure.deleteSubjectById(id)
+        then:
+        deleteSubjectService.deleteSubject(_ as String) >> {throw new Exception()}
+        res.getStatusCode() == HttpStatus.BAD_REQUEST
+    }
+
+    def "set teacher" () {
+        given:
+        String idSubject = "2"
+        String ident = "ident"
+        String header = "header"
+        when:
+        ResponseEntity res = subjectMapperInfrastructure.setTeacher(idSubject, ident, header)
+        then:
+        res.getStatusCode() == HttpStatus.OK
+    }
 }
