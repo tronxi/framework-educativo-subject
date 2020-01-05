@@ -10,15 +10,20 @@ import org.springframework.stereotype.Repository;
 @Repository
 public class UserRepository implements IUserRepository {
 
-    @Autowired
     private UserMapper userMapper;
+
+    @Autowired
+    public UserRepository(UserMapper userMapper) {
+        this.userMapper = userMapper;
+
+    }
 
     @Override
     public User getUserByIdent(String ident, String header) {
-        return userDTOtoUser(userMapper.getUserByIdent(ident, header).getBody());
+        return userDAOtoUser(userMapper.getUserByIdent(ident, header).getBody());
     }
 
-    private User userDTOtoUser(UserDAO userDAO) {
+    private User userDAOtoUser(UserDAO userDAO) {
         return User.builder()
                 .email(userDAO.getEmail())
                 .id_user(userDAO.getId_user())

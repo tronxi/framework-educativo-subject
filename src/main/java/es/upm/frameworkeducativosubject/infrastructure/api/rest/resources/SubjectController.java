@@ -13,8 +13,12 @@ import org.springframework.web.bind.annotation.*;
 @PreAuthorize("authenticated")
 public class SubjectController {
 
-    @Autowired
     private SubjectMapperInfrastructure subjectMapperInfrastructure;
+
+    @Autowired
+    public SubjectController(SubjectMapperInfrastructure subjectMapperInfrastructure) {
+        this.subjectMapperInfrastructure = subjectMapperInfrastructure;
+    }
 
     @PreAuthorize("hasRole('ADMIN')")
     @PostMapping()

@@ -11,8 +11,12 @@ import org.springframework.stereotype.Repository;
 @Repository
 public class SubjectRepository implements ISubjectRepository {
 
-    @Autowired
     private SubjectMapper subjectMapper;
+
+    @Autowired
+    public SubjectRepository(SubjectMapper subjectMapper) {
+        this.subjectMapper = subjectMapper;
+    }
 
     @Override
     public Subject getSubjectById(String id) {

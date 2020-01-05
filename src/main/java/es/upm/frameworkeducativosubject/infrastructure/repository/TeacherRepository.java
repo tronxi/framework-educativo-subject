@@ -9,8 +9,12 @@ import org.springframework.stereotype.Repository;
 @Repository
 public class TeacherRepository implements ITeacherRepository {
 
-    @Autowired
     private SubjectUserMapper subjectUserMapper;
+
+    @Autowired
+    public TeacherRepository(SubjectUserMapper subjectUserMapper) {
+        this.subjectUserMapper = subjectUserMapper;
+    }
     @Override
     public void setTeacher(String idSubject, String idTeacher)  throws Exception{
         try {

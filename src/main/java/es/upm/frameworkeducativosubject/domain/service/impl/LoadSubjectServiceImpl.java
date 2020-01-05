@@ -9,11 +9,15 @@ import org.springframework.stereotype.Service;
 @Service
 public class LoadSubjectServiceImpl implements LoadSubjectService {
 
-    @Autowired
     ISubjectRepository subjectRepository;
 
+    @Autowired
+    public LoadSubjectServiceImpl(ISubjectRepository subjectRepository) {
+        this.subjectRepository = subjectRepository;
+    }
+
     @Override
-    public void loadSubject(Subject subject) throws Exception{
+    public void loadSubject(Subject subject) throws Exception {
         try {
             subjectRepository.saveSubject(subject);
         } catch (Exception e) {
