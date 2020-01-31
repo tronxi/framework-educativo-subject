@@ -1,6 +1,6 @@
 package es.upm.frameworkeducativosubject.infrastructure.repository.mappers;
 
-import es.upm.frameworkeducativosubject.infrastructure.repository.model.GroupDAO;
+import es.upm.frameworkeducativosubject.infrastructure.repository.model.GroupEntity;
 import org.apache.ibatis.annotations.Delete;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
@@ -12,7 +12,7 @@ public interface GroupMapper {
 
     @Select("select ID_GROUP, ID_SUBJECT, NAME_GROUP " +
             "FROM GROUPS WHERE ID_SUBJECT = #{subject_id}")
-    List<GroupDAO> getGroupBySubjectId(String subject_id);
+    List<GroupEntity> getGroupBySubjectId(String subject_id);
 
     @Delete("delete from GROUPS where ID_GROUP = #{group_id}")
     void deleteGroupById(String group_id);

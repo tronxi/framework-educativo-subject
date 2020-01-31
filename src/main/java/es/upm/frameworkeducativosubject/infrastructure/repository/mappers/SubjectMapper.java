@@ -1,6 +1,6 @@
 package es.upm.frameworkeducativosubject.infrastructure.repository.mappers;
 
-import es.upm.frameworkeducativosubject.infrastructure.repository.model.SubjectDAO;
+import es.upm.frameworkeducativosubject.infrastructure.repository.model.SubjectEntity;
 import org.apache.ibatis.annotations.Delete;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
@@ -11,11 +11,11 @@ public interface SubjectMapper {
 
     @Select("select ID_SUBJECT, NAME, YEAR  " +
             "FROM SUBJECT WHERE ID_SUBJECT = #{id}")
-    SubjectDAO getSubjectById(String id);
+    SubjectEntity getSubjectById(String id);
 
     @Select("select ID_SUBJECT, NAME, YEAR  " +
             "FROM SUBJECT WHERE NAME = #{name} and YEAR = #{year}")
-    SubjectDAO getSubjectByNameYear(String name, String year);
+    SubjectEntity getSubjectByNameYear(String name, String year);
 
     @Select("insert into SUBJECT (NAME, YEAR) VALUES" +
             "(#{name}, #{year})")

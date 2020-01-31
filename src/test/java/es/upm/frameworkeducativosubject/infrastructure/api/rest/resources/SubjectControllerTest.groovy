@@ -1,6 +1,11 @@
 package es.upm.frameworkeducativosubject.infrastructure.api.rest.resources
 
+import es.upm.frameworkeducativosubject.domain.model.Group
+import es.upm.frameworkeducativosubject.domain.model.Subject
+import es.upm.frameworkeducativosubject.domain.port.primary.TeacherService
+import es.upm.frameworkeducativosubject.domain.useCase.*
 import es.upm.frameworkeducativosubject.infrastructure.api.rest.mapper.SubjectMapperInfrastructure
+import es.upm.frameworkeducativosubject.infrastructure.api.rest.model.GroupDTO
 import es.upm.frameworkeducativosubject.infrastructure.api.rest.model.SubjectDTO
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
@@ -13,27 +18,68 @@ class SubjectControllerTest extends Specification {
 
     @Shared
     SubjectController subjectController
+    @Shared
+    LoadSubjectUseCase loadSubject
+    @Shared
+    FindSubjectUseCase findSubject
+    @Shared
+    UpdateSubjectUseCase updateSubject
+    @Shared
+    DeleteSubjectUseCase deleteSubject
+    @Shared
+    TeacherService teacherService
 
     def setup() {
+        loadSubject = Mock(LoadSubjectUseCase)
+        findSubject = Mock(FindSubjectUseCase)
+        updateSubject = Mock(UpdateSubjectUseCase)
+        deleteSubject = Mock(DeleteSubjectUseCase)
+        teacherService = Mock(TeacherServiceUseCase)
         subjectMapperInfrastructure = Mock(SubjectMapperInfrastructure)
-        subjectController = new SubjectController(subjectMapperInfrastructure)
+        subjectController = new SubjectController(subjectMapperInfrastructure,
+            loadSubject,
+            findSubject,
+            updateSubject,
+            deleteSubject,
+            teacherService)
     }
 
     def "load subject" () {
         given:
-        SubjectDTO subjectDTO = SubjectDTO.builder().build()
-        subjectMapperInfrastructure.subjectLoadAdapter(subjectDTO) >> new ResponseEntity(HttpStatus.OK)
+        List<GroupDTO> groupsDTO = new ArrayList<>()
+        groupsDTO.add(GroupDTO.builder().name("grupo").build())
+
+        SubjectDTO subjectDTO = SubjectDTO.builder().idSubject('2').name('a').groups(groupsDTO).build()
         when:
         ResponseEntity res = subjectController.loadSubject(subjectDTO)
         then:
-        res.statusCode == HttpStatus.OK
+        1 * loadSubject.loadSubject(_)
+        res.getStatusCode() == HttpStatus.OK
+    }
+
+    def "subject load with exception" () {
+        given:
+        SubjectDTO subjectDTO = SubjectDTO.builder().idSubject('2').name('a').groups(new ArrayList<GroupDTO>()).build()
+        subjectMapperInfrastructure.subjectDTOToSubject(subjectDTO) >> Subject.builder().build()
+        when:
+        ResponseEntity res = subjectController.loadSubject(subjectDTO)
+        then:
+        loadSubject.loadSubject(_ as Subject) >> {throw new Exception()}
+        res.getStatusCode() == HttpStatus.BAD_REQUEST
     }
 
     def "get subject by id" () {
         given:
-        String id = "1"
-        SubjectDTO subjectDTO = SubjectDTO.builder().idSubject(id).build()
-        subjectMapperInfrastructure.getSubjectByIdAdapter(id) >> ResponseEntity.ok(subjectDTO)
+        String id = "2"
+        SubjectDTO subjectDTO = SubjectDTO.builder()
+                .idSubject(id)
+                .groups(new ArrayList<GroupDTO>())
+                .build()
+        Subject subject = Subject.builder()
+                .id_subject(id)
+                .groups(new ArrayList<Group>()).build()
+        findSubject.findSubjectById(id) >> subject
+        subjectMapperInfrastructure.subjectToSubjectDTO(subject) >> subjectDTO
         when:
         ResponseEntity res = subjectController.getSubject(id)
         then:
@@ -46,7 +92,9 @@ class SubjectControllerTest extends Specification {
         String name = "name"
         String year = "2019"
         SubjectDTO subjectDTO = SubjectDTO.builder().name(name).year(year).build()
-        subjectMapperInfrastructure.getSubjectByNameYear(name, year) >> ResponseEntity.ok(subjectDTO)
+        Subject subject = Subject.builder().name(name).year(year).build()
+        findSubject.findSubjectByNameYear(name, year) >> subject
+        subjectMapperInfrastructure.subjectToSubjectDTO(subject) >> subjectDTO
         when:
         ResponseEntity res = subjectController.getSubject(name, year)
         then:
@@ -59,11 +107,24 @@ class SubjectControllerTest extends Specification {
         String name = "name"
         String year = "2019"
         SubjectDTO subjectDTO = SubjectDTO.builder().name(name).year(year).build()
-        subjectMapperInfrastructure.updateSubjectAdapter(subjectDTO) >> new ResponseEntity(HttpStatus.OK)
         when:
         ResponseEntity res = subjectController.updateSubject(subjectDTO)
         then:
         res.statusCode == HttpStatus.OK
+    }
+
+    def "update subject with exception" () {
+        given:
+        String name = "name"
+        String year = "2019"
+        SubjectDTO subjectDTO = SubjectDTO.builder().name(name).year(year).build()
+        Subject subject = Subject.builder().name(name).year(year).build()
+        subjectMapperInfrastructure.subjectDTOToSubject(subjectDTO) >> subject
+        updateSubject.updateSubject(subject) >> {throw new Exception()}
+        when:
+        ResponseEntity res = subjectController.updateSubject(subjectDTO)
+        then:
+        res.statusCode == HttpStatus.BAD_REQUEST
     }
 
     def "set teacher" () {
@@ -71,20 +132,40 @@ class SubjectControllerTest extends Specification {
         String idSubject = "id"
         String ident = "ident"
         String header = "header"
-        subjectMapperInfrastructure.setTeacher(idSubject, ident, header) >> new ResponseEntity(HttpStatus.OK)
         when:
         ResponseEntity res = subjectController.setTeacher(idSubject, ident, header)
         then:
         res.statusCode == HttpStatus.OK
     }
 
+    def "set teacher with exception" () {
+        given:
+        String idSubject = "id"
+        String ident = "ident"
+        String header = "header"
+        teacherService.setTeacher(idSubject, ident, header) >> {throw new Exception()}
+        when:
+        ResponseEntity res = subjectController.setTeacher(idSubject, ident, header)
+        then:
+        res.statusCode == HttpStatus.BAD_REQUEST
+    }
+
     def "delete subject" () {
         given:
         String idSubject = "id"
-        subjectMapperInfrastructure.deleteSubjectById(idSubject) >> new ResponseEntity(HttpStatus.OK)
         when:
         ResponseEntity res = subjectController.deleteSubject(idSubject)
         then:
         res.statusCode == HttpStatus.OK
+    }
+
+    def "delete subject with exception" () {
+        given:
+        String idSubject = "id"
+        deleteSubject.deleteSubject(idSubject) >> {throw new Exception()}
+        when:
+        ResponseEntity res = subjectController.deleteSubject(idSubject)
+        then:
+        res.statusCode == HttpStatus.BAD_REQUEST
     }
 }

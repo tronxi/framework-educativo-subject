@@ -1,6 +1,6 @@
 package es.upm.frameworkeducativosubject.infrastructure.repository.mappers
 
-import es.upm.frameworkeducativosubject.infrastructure.repository.model.UserDAO
+import es.upm.frameworkeducativosubject.infrastructure.repository.model.UserEntity
 import org.springframework.http.ResponseEntity
 import spock.lang.Shared
 import spock.lang.Specification
@@ -15,9 +15,9 @@ class UserMapperTest extends Specification {
 
     def "user mapper fallback" () {
         given:
-        ResponseEntity<UserDAO> responseEntity = ResponseEntity.ok(UserDAO.builder().build())
+        ResponseEntity<UserEntity> responseEntity = ResponseEntity.ok(UserEntity.builder().build())
         when:
-        ResponseEntity<UserDAO> res = userMapper.getUserByIdent(_ as String, _ as String)
+        ResponseEntity<UserEntity> res = userMapper.getUserByIdent(_ as String, _ as String)
         then:
         res == responseEntity
     }
