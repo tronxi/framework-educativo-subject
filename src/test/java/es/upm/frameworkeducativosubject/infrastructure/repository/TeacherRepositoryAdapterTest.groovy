@@ -1,6 +1,6 @@
 package es.upm.frameworkeducativosubject.infrastructure.repository
 
-
+import es.upm.frameworkeducativosubject.domain.port.secundary.UserRepository
 import es.upm.frameworkeducativosubject.infrastructure.repository.mappers.SubjectUserMapper
 import org.apache.ibatis.exceptions.PersistenceException
 import spock.lang.Shared
@@ -9,13 +9,15 @@ import spock.lang.Specification
 class TeacherRepositoryAdapterTest extends Specification {
     @Shared
     SubjectUserMapper subjectUserMapper
+    @Shared
+    UserRepository userRepository
 
     @Shared
     TeacherRepositoryAdapter teacherRepository
 
     def setup() {
         subjectUserMapper = Mock(SubjectUserMapper)
-        teacherRepository = new TeacherRepositoryAdapter(subjectUserMapper)
+        teacherRepository = new TeacherRepositoryAdapter(subjectUserMapper, userRepository)
     }
 
     def "set teacher" () {

@@ -5,6 +5,7 @@ import es.upm.frameworkeducativosubject.domain.model.Subject
 import es.upm.frameworkeducativosubject.domain.port.primary.TeacherService
 import es.upm.frameworkeducativosubject.domain.useCase.*
 import es.upm.frameworkeducativosubject.infrastructure.api.rest.mapper.SubjectMapperInfrastructure
+import es.upm.frameworkeducativosubject.infrastructure.api.rest.mapper.UserMapperInfrastructure
 import es.upm.frameworkeducativosubject.infrastructure.api.rest.model.GroupDTO
 import es.upm.frameworkeducativosubject.infrastructure.api.rest.model.SubjectDTO
 import org.springframework.http.HttpStatus
@@ -15,6 +16,8 @@ import spock.lang.Specification
 class SubjectControllerTest extends Specification {
     @Shared
     SubjectMapperInfrastructure subjectMapperInfrastructure
+    @Shared
+    UserMapperInfrastructure userMapperInfrastructure
 
     @Shared
     SubjectController subjectController
@@ -35,8 +38,10 @@ class SubjectControllerTest extends Specification {
         updateSubject = Mock(UpdateSubjectUseCase)
         deleteSubject = Mock(DeleteSubjectUseCase)
         teacherService = Mock(TeacherServiceUseCase)
+        userMapperInfrastructure = Mock(UserMapperInfrastructure)
         subjectMapperInfrastructure = Mock(SubjectMapperInfrastructure)
         subjectController = new SubjectController(subjectMapperInfrastructure,
+                userMapperInfrastructure,
             loadSubject,
             findSubject,
             updateSubject,
