@@ -5,6 +5,7 @@ import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestParam;
 
@@ -15,11 +16,20 @@ public interface UserMapper {
     ResponseEntity<UserEntity> getUserByIdent(@RequestParam String ident,
                                               @RequestHeader("authorization") String header);
 
+    @GetMapping("/user-service/user/{idUser}")
+    ResponseEntity<UserEntity> getUserById(@PathVariable String idUser,
+                                           @RequestHeader("authorization") String header);
+
     @Component
     class UserMapperFallback implements UserMapper {
 
         @Override
         public ResponseEntity<UserEntity> getUserByIdent(String ident, String header) {
+            return ResponseEntity.ok(UserEntity.builder().build());
+        }
+
+        @Override
+        public ResponseEntity<UserEntity> getUserById(String idUser, String header) {
             return ResponseEntity.ok(UserEntity.builder().build());
         }
     }

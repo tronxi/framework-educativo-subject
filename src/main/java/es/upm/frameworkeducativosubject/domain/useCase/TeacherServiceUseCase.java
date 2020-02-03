@@ -7,6 +7,8 @@ import es.upm.frameworkeducativosubject.domain.port.secundary.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 @RequiredArgsConstructor
 public class TeacherServiceUseCase implements TeacherService {
@@ -33,6 +35,15 @@ public class TeacherServiceUseCase implements TeacherService {
     public void deleteTeacher(String idSubject, String ident) throws Exception{
         try {
             teacherRepository.deleteTeacher(idSubject, ident);
+        } catch (Exception e) {
+            throw new Exception();
+        }
+    }
+
+    @Override
+    public List<User> getTeacher(String idSubject, String ident, String header) throws Exception {
+        try {
+            return teacherRepository.getTeachers(idSubject, ident);
         } catch (Exception e) {
             throw new Exception();
         }

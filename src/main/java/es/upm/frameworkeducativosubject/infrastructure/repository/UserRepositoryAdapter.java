@@ -17,6 +17,11 @@ public class UserRepositoryAdapter implements es.upm.frameworkeducativosubject.d
         return userDAOtoUser(userMapper.getUserByIdent(ident, header).getBody());
     }
 
+    @Override
+    public User getUserByIdUser(String idUser, String header) {
+        return userDAOtoUser(userMapper.getUserById(idUser, header).getBody());
+    }
+
     private User userDAOtoUser(UserEntity userEntity) {
         return User.builder()
                 .email(userEntity.getEmail())
