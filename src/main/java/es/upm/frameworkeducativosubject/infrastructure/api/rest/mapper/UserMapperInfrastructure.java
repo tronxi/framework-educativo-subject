@@ -2,10 +2,12 @@ package es.upm.frameworkeducativosubject.infrastructure.api.rest.mapper;
 
 import es.upm.frameworkeducativosubject.domain.model.User;
 import es.upm.frameworkeducativosubject.infrastructure.api.rest.model.UserDTO;
+import org.springframework.stereotype.Component;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
+@Component
 public class UserMapperInfrastructure {
     public UserDTO userToUserDTO(User user) {
         return UserDTO.builder()

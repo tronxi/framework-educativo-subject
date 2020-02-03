@@ -43,7 +43,7 @@ public class TeacherServiceUseCase implements TeacherService {
     @Override
     public List<User> getTeacher(String idSubject, String ident, String header) throws Exception {
         try {
-            return teacherRepository.getTeachers(idSubject, ident);
+            return teacherRepository.getTeachers(idSubject, ident, header);
         } catch (Exception e) {
             throw new Exception();
         }
