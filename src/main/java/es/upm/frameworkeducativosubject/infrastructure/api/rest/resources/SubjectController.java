@@ -84,7 +84,7 @@ public class SubjectController {
     }
 
     @PreAuthorize("hasRole('ADMIN')")
-    @GetMapping(value = "/{idSubject}/teacher")
+    @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE, value = "/{idSubject}/teacher")
     public ResponseEntity<UserDTO> getTeacher(@PathVariable String idSubject,
                                               @RequestHeader("authorization") String header) {
         try {
