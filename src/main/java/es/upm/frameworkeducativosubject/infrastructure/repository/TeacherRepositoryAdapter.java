@@ -45,7 +45,7 @@ public class TeacherRepositoryAdapter implements es.upm.frameworkeducativosubjec
         try {
             List<SubjectUserEntity> subjectUser = subjectUserMapper.getTeachers(idSubject);
             return subjectUser.stream()
-                    .map(user -> userRepository.getUserByIdUser(user.getIdSubject(), header))
+                    .map(user -> userRepository.getUserByIdUser(user.getIdTeacher(), header))
                     .collect(Collectors.toList());
         } catch (PersistenceException e) {
             throw new Exception("ex");
