@@ -84,11 +84,11 @@ public class SubjectController {
     }
 
     @PreAuthorize("hasRole('ADMIN')")
-    @GetMapping(value = "/{idSubject}/teacher/{ident}")
-    public ResponseEntity<UserDTO> getTeacher(@PathVariable String idSubject, @PathVariable String ident,
+    @GetMapping(value = "/{idSubject}/teacher")
+    public ResponseEntity<UserDTO> getTeacher(@PathVariable String idSubject,
                                               @RequestHeader("authorization") String header) {
         try {
-            List<UserDTO> list = teacherService.getTeacher(idSubject, ident, header).stream()
+            List<UserDTO> list = teacherService.getTeacher(idSubject, header).stream()
                     .map(userMapperInfrastructure::userToUserDTO)
                     .collect(Collectors.toList());
             return new ResponseEntity(list, HttpStatus.OK);

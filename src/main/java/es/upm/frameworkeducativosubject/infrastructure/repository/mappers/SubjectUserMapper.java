@@ -20,6 +20,6 @@ public interface SubjectUserMapper {
     void deleteTeacher(String idSubject, String idTeacher);
 
     @Select("select ID_SUBJECT, ID_USER from SUBJECT_USER " +
-            "where ID_USER = #{idTeacher}")
-    List<SubjectUserEntity> getTeachers(String idSubject, String idTeacher);
+            "where ID_SUBJECT = #{idSubject}")
+    List<SubjectUserEntity> getTeachers(String idSubject);
 }

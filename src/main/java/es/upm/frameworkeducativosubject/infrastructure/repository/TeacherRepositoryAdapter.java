@@ -41,9 +41,9 @@ public class TeacherRepositoryAdapter implements es.upm.frameworkeducativosubjec
     }
 
     @Override
-    public List<User> getTeachers(String idSubject, String idTeacher, String header) throws Exception {
+    public List<User> getTeachers(String idSubject, String header) throws Exception {
         try {
-            List<SubjectUserEntity> subjectUser = subjectUserMapper.getTeachers(idSubject, idTeacher);
+            List<SubjectUserEntity> subjectUser = subjectUserMapper.getTeachers(idSubject);
             return subjectUser.stream()
                     .map(user -> userRepository.getUserByIdUser(user.getIdSubject(), header))
                     .collect(Collectors.toList());

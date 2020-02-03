@@ -41,9 +41,9 @@ public class TeacherServiceUseCase implements TeacherService {
     }
 
     @Override
-    public List<User> getTeacher(String idSubject, String ident, String header) throws Exception {
+    public List<User> getTeacher(String idSubject, String header) throws Exception {
         try {
-            return teacherRepository.getTeachers(idSubject, ident, header);
+            return teacherRepository.getTeachers(idSubject, header);
         } catch (Exception e) {
             throw new Exception();
         }
