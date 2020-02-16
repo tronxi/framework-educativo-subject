@@ -1,5 +1,29 @@
 spring:
   datasource:
+    username: pi
+    password: ENC(+Tb6CL+hH5md5GjPcqoz2PRUrl2KopUp)
     url: jdbc:mysql://192.168.1.7:3306/framework-educativo?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC
     driver-class-name: com.mysql.jdbc.Driver
-environment: pro
+    initialization-mode: embedded
+  application:
+    name: subject
+server:
+  port: 8082
+eureka-host: raspberrytronxi2.ddns.net
+eureka:
+  instance:
+    status-page-url-path: /actuator/health
+    leaseRenewalIntervalInSeconds: 1
+    leaseExpirationDurationInSeconds: 2
+  client:
+    serviceUrl:
+      defaultZone: ${eureka-host}:8761/eureka/
+    healthcheck:
+      enabled: true
+    lease:
+      duration: 5
+hystrix:
+  shareSecurityContext: true
+feign:
+  hystrix:
+    enabled: true
