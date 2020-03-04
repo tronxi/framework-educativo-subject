@@ -10,11 +10,13 @@ spring:
 server:
   port: 8082
 eureka-host: raspberrytronxi2.ddns.net
+subject-service: subject-service
 eureka:
   instance:
     status-page-url-path: /actuator/health
     leaseRenewalIntervalInSeconds: 1
     leaseExpirationDurationInSeconds: 2
+    hostname: ${subject-service}
   client:
     serviceUrl:
       defaultZone: ${eureka-host}:8761/eureka/
