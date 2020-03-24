@@ -1,0 +1,87 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: framework-educativo-subject
+  labels:
+    app: framework-educativo-subject
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: framework-educativo-subject
+  template:
+    metadata:
+      labels:
+        app: framework-educativo-subject
+    spec:
+      containers:
+        - name: framework-educativo-subject
+          image: tronxi/framework-educativo-subject:${SUBJECT_TAG}
+          resources:
+            limits:
+              cpu: "0.4"
+              memory: "512Mi"
+            requests:
+              cpu: "0.2"
+              memory: "400Mi"
+          livenessProbe:
+            httpGet:
+              path: /actuator/health
+              port: 8082
+            initialDelaySeconds: 90
+            periodSeconds: 30
+
+          readinessProbe:
+            httpGet:
+              path: /actuator/health
+              port: 8082
+            initialDelaySeconds: 90
+            periodSeconds: 30
+          env:
+            - name: profile
+              valueFrom:
+                configMapKeyRef:
+                  name: framework-educativo-config-map
+                  key: profile
+            - name: clave
+              valueFrom:
+                secretKeyRef:
+                  name: framework-educativo-secret
+                  key: clave
+            - name: eureka_host
+              valueFrom:
+                configMapKeyRef:
+                  name: framework-educativo-config-map
+                  key: eureka_host
+            - name: subject_service
+              valueFrom:
+                configMapKeyRef:
+                  name: framework-educativo-config-map
+                  key: subject_service
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: subject-service
+  labels:
+    app: framework-educativo-subject
+spec:
+  selector:
+    app: framework-educativo-subject
+  ports:
+    - protocol: TCP
+      port: 8082
+      targetPort: 8082
+---
+apiVersion: autoscaling/v1
+kind: HorizontalPodAutoscaler
+metadata:
+  name: framework-educativo-subject
+spec:
+  scaleTargetRef:
+    apiVersion: apps/v1
+    kind: Deployment
+    name: framework-educativo-subject
+  minReplicas: 1
+  maxReplicas: 3
+  targetCPUUtilizationPercentage: 50
