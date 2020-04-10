@@ -6,6 +6,9 @@ import es.upm.frameworkeducativosubject.infrastructure.repository.model.UserEnti
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 @Repository
 @RequiredArgsConstructor
 public class UserRepositoryAdapter implements es.upm.frameworkeducativosubject.domain.port.secundary.UserRepository {
@@ -18,8 +21,11 @@ public class UserRepositoryAdapter implements es.upm.frameworkeducativosubject.d
     }
 
     @Override
-    public User getUserByIdUser(String idUser, String header) {
-        return userDAOtoUser(userMapper.getUserById(idUser, header).getBody());
+    public List<User> getUserListByIdUser(List<String> idUserList, String header) {
+        List<UserEntity> userEntityList = userMapper.getUserListById(idUserList, header).getBody();
+        return userEntityList.stream()
+                .map(this::userDAOtoUser)
+                .collect(Collectors.toList());
     }
 
     private User userDAOtoUser(UserEntity userEntity) {

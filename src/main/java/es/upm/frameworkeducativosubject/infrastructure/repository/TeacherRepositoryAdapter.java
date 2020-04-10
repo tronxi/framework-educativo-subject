@@ -7,13 +7,10 @@ import es.upm.frameworkeducativosubject.infrastructure.repository.model.SubjectU
 import es.upm.frameworkeducativosubject.infrastructure.repository.model.UserEntity;
 import lombok.RequiredArgsConstructor;
 import org.apache.ibatis.exceptions.PersistenceException;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
 import java.util.stream.Collectors;
-
-import static io.micrometer.shaded.org.pcollections.Empty.map;
 
 @Repository
 @RequiredArgsConstructor
@@ -44,9 +41,10 @@ public class TeacherRepositoryAdapter implements es.upm.frameworkeducativosubjec
     public List<User> getTeachers(String idSubject, String header) throws Exception {
         try {
             List<SubjectUserEntity> subjectUser = subjectUserMapper.getTeachers(idSubject);
-            return subjectUser.stream()
-                    .map(user -> userRepository.getUserByIdUser(user.getIdTeacher(), header))
+            List<String> idUserList = subjectUser.stream()
+                    .map(SubjectUserEntity::getIdSubject)
                     .collect(Collectors.toList());
+            return userRepository.getUserListByIdUser(idUserList, header);
         } catch (PersistenceException e) {
             throw new Exception("ex");
         }

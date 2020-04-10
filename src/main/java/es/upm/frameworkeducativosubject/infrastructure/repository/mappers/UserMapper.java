@@ -9,6 +9,9 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import java.util.Collections;
+import java.util.List;
+
 @FeignClient(name = "user", fallback = UserMapper.UserMapperFallback.class)
 public interface UserMapper {
 
@@ -16,9 +19,9 @@ public interface UserMapper {
     ResponseEntity<UserEntity> getUserByIdent(@RequestParam String ident,
                                               @RequestHeader("authorization") String header);
 
-    @GetMapping("/user-service/user/{idUser}")
-    ResponseEntity<UserEntity> getUserById(@PathVariable String idUser,
-                                           @RequestHeader("authorization") String header);
+    @GetMapping("/user-service/user/teacher")
+    ResponseEntity<List<UserEntity>> getUserListById(@PathVariable List<String> idUser,
+                                                 @RequestHeader("authorization") String header);
 
     @Component
     class UserMapperFallback implements UserMapper {
@@ -29,8 +32,8 @@ public interface UserMapper {
         }
 
         @Override
-        public ResponseEntity<UserEntity> getUserById(String idUser, String header) {
-            return ResponseEntity.ok(UserEntity.builder().build());
+        public ResponseEntity<List<UserEntity>> getUserListById(List<String> idUser, String header) {
+            return ResponseEntity.ok(Collections.emptyList());
         }
     }
 
