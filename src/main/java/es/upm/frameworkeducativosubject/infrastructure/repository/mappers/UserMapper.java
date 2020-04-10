@@ -16,9 +16,9 @@ public interface UserMapper {
     ResponseEntity<UserEntity> getUserByIdent(@RequestParam String ident,
                                               @RequestHeader("authorization") String header);
 
-    @GetMapping("/user-service/user/subject")
+    @PostMapping("/user-service/user/subject")
     ResponseEntity<List<UserEntity>> getUserListById(@RequestBody List<String> idUser,
-                                                 @RequestHeader("authorization") String header);
+                                                     @RequestHeader("authorization") String header);
 
     @Component
     class UserMapperFallback implements UserMapper {
