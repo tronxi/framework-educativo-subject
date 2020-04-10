@@ -16,7 +16,7 @@ public interface UserMapper {
     ResponseEntity<UserEntity> getUserByIdent(@RequestParam String ident,
                                               @RequestHeader("authorization") String header);
 
-    @GetMapping("/user-service/user/teacher")
+    @GetMapping("/user-service/user/subject")
     ResponseEntity<List<UserEntity>> getUserListById(@RequestBody List<String> idUser,
                                                  @RequestHeader("authorization") String header);
 
