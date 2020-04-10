@@ -4,10 +4,7 @@ import es.upm.frameworkeducativosubject.infrastructure.repository.model.UserEnti
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestHeader;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.Collections;
 import java.util.List;
@@ -20,7 +17,7 @@ public interface UserMapper {
                                               @RequestHeader("authorization") String header);
 
     @GetMapping("/user-service/user/teacher")
-    ResponseEntity<List<UserEntity>> getUserListById(@PathVariable List<String> idUser,
+    ResponseEntity<List<UserEntity>> getUserListById(@RequestBody List<String> idUser,
                                                  @RequestHeader("authorization") String header);
 
     @Component
