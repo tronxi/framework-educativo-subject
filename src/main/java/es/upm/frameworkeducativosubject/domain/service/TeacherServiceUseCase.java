@@ -32,9 +32,9 @@ public class TeacherServiceUseCase implements TeacherService {
     }
 
     @Override
-    public void deleteTeacher(String idSubject, String ident) throws Exception{
+    public void deleteTeacher(String idSubject, String id) throws Exception{
         try {
-            teacherRepository.deleteTeacher(idSubject, ident);
+            teacherRepository.deleteTeacher(idSubject, id);
         } catch (Exception e) {
             throw new Exception();
         }

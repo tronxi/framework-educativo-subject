@@ -84,6 +84,17 @@ public class SubjectController {
     }
 
     @PreAuthorize("hasRole('ADMIN')")
+    @DeleteMapping(value = "/{idSubject}/teacher/{id}")
+    public ResponseEntity deleteTeacher(@PathVariable String idSubject, @PathVariable String id) {
+        try {
+            teacherService.deleteTeacher(idSubject, id);
+            return new ResponseEntity(HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity(HttpStatus.BAD_REQUEST);
+        }
+    }
+
+    @PreAuthorize("hasRole('ADMIN')")
     @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE, value = "/{idSubject}/teacher")
     public ResponseEntity<UserDTO> getTeacher(@PathVariable String idSubject,
                                               @RequestHeader("authorization") String header) {
