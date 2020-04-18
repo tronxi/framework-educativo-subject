@@ -1,6 +1,8 @@
 package es.upm.frameworkeducativosubject.infrastructure.repository;
 
 import es.upm.frameworkeducativosubject.domain.model.User;
+import es.upm.frameworkeducativosubject.domain.port.secundary.UserRepository;
+import es.upm.frameworkeducativosubject.infrastructure.repository.mappers.DeleteUserMapper;
 import es.upm.frameworkeducativosubject.infrastructure.repository.mappers.UserMapper;
 import es.upm.frameworkeducativosubject.infrastructure.repository.model.UserEntity;
 import lombok.RequiredArgsConstructor;
@@ -11,9 +13,10 @@ import java.util.stream.Collectors;
 
 @Repository
 @RequiredArgsConstructor
-public class UserRepositoryAdapter implements es.upm.frameworkeducativosubject.domain.port.secundary.UserRepository {
+public class UserRepositoryAdapter implements UserRepository {
 
     private final UserMapper userMapper;
+    private final DeleteUserMapper deleteUserMapper;
 
     @Override
     public User getUserByIdent(String ident, String header) {
@@ -26,6 +29,11 @@ public class UserRepositoryAdapter implements es.upm.frameworkeducativosubject.d
         return userEntityList.stream()
                 .map(this::userDAOtoUser)
                 .collect(Collectors.toList());
+    }
+
+    @Override
+    public void deleteTeacher(String ident) {
+        deleteUserMapper.deleteTeacher(ident);
     }
 
     private User userDAOtoUser(UserEntity userEntity) {

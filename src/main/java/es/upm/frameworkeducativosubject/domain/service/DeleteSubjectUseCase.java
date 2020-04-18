@@ -1,4 +1,4 @@
-package es.upm.frameworkeducativosubject.domain.useCase;
+package es.upm.frameworkeducativosubject.domain.service;
 
 import es.upm.frameworkeducativosubject.domain.port.primary.DeleteSubject;
 import es.upm.frameworkeducativosubject.domain.port.secundary.GroupRepository;

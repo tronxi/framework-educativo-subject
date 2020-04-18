@@ -1,4 +1,4 @@
-package es.upm.frameworkeducativosubject.domain.useCase
+package es.upm.frameworkeducativosubject.domain.service
 
 import es.upm.frameworkeducativosubject.domain.model.Subject
 import es.upm.frameworkeducativosubject.domain.port.primary.LoadSubject

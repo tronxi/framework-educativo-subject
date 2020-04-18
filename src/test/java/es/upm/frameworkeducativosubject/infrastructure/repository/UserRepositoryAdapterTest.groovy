@@ -1,6 +1,7 @@
 package es.upm.frameworkeducativosubject.infrastructure.repository
 
 import es.upm.frameworkeducativosubject.domain.model.User
+import es.upm.frameworkeducativosubject.infrastructure.repository.mappers.DeleteUserMapper
 import es.upm.frameworkeducativosubject.infrastructure.repository.mappers.UserMapper
 import es.upm.frameworkeducativosubject.infrastructure.repository.model.UserEntity
 import org.springframework.http.ResponseEntity
@@ -12,11 +13,15 @@ class UserRepositoryAdapterTest extends Specification {
     UserMapper userMapper
 
     @Shared
+    DeleteUserMapper deleteUserMapper
+
+    @Shared
     UserRepositoryAdapter userRepository
 
     def setup() {
         userMapper = Mock(UserMapper)
-        userRepository = new UserRepositoryAdapter(userMapper)
+        deleteUserMapper = Mock(DeleteUserMapper)
+        userRepository = new UserRepositoryAdapter(userMapper, deleteUserMapper)
     }
 
     def "get user by ident" () {
