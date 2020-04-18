@@ -48,11 +48,21 @@ spec:
                 secretKeyRef:
                   name: framework-educativo-secret
                   key: clave
+            - name: rabbit_pass
+                valueFrom:
+                  secretKeyRef:
+                    name: framework-educativo-secret
+                    key: rabbit_pass
             - name: eureka_host
               valueFrom:
                 configMapKeyRef:
                   name: framework-educativo-config-map
                   key: eureka_host
+            - name: rabbit_host
+                valueFrom:
+                  configMapKeyRef:
+                    name: framework-educativo-config-map
+                    key: rabbit_host
             - name: subject_service
               valueFrom:
                 configMapKeyRef:

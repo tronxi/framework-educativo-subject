@@ -1,4 +1,8 @@
 spring:
+  rabbitmq:
+    host: localhost
+    port: 5672
+    username: guest
   datasource:
     username: pi
     password: ENC(+Tb6CL+hH5md5GjPcqoz2PRUrl2KopUp)
@@ -9,7 +13,7 @@ spring:
     name: subject
 server:
   port: 8082
-eureka-host: raspberrytronxi2.ddns.net
+eureka-host: http://localhost
 subject-service: subject-service
 eureka:
   instance:

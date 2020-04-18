@@ -13,5 +13,7 @@ ENV clave clave
 ENV eureka_host http://localhost
 ENV subject_service subject-service
 ENV profile dev
+ENV rabbit_host localhost
+ENV rabbit_pass guest
 COPY --from="builder" /target/framework-educativo-subject-0.0.1-SNAPSHOT.jar .
-CMD java -jar -Dspring.profiles.active=${profile} -Djasypt.encryptor.password=${clave} framework-educativo-subject-0.0.1-SNAPSHOT.jar --eureka-host=${eureka_host} --subject-service=${subject_service}
+CMD java -jar -Dspring.profiles.active=${profile} -Djasypt.encryptor.password=${clave} framework-educativo-subject-0.0.1-SNAPSHOT.jar --eureka-host=${eureka_host} --subject-service=${subject_service} --spring.rabbitmq.host=${rabbit_host} --spring.rabbitmq.password=${rabbit_pass}
