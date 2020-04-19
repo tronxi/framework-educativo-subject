@@ -1,7 +1,6 @@
 package es.upm.frameworkeducativosubject.infrastructure.api.rest.resources;
 
 import es.upm.frameworkeducativosubject.domain.model.Subject;
-import es.upm.frameworkeducativosubject.domain.model.User;
 import es.upm.frameworkeducativosubject.domain.port.primary.*;
 import es.upm.frameworkeducativosubject.infrastructure.api.rest.mapper.SubjectMapperInfrastructure;
 import es.upm.frameworkeducativosubject.infrastructure.api.rest.mapper.UserMapperInfrastructure;
@@ -14,6 +13,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -118,4 +118,5 @@ public class SubjectController {
             return new ResponseEntity(HttpStatus.BAD_REQUEST);
         }
     }
+
 }
