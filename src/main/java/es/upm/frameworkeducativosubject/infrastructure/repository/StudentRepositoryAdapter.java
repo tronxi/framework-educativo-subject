@@ -15,4 +15,9 @@ public class StudentRepositoryAdapter implements StudentRepository  {
     public void saveStudent(String idGroup, String idStudent) {
         userGroupMapper.saveStudent(idGroup, idStudent);
     }
+
+    @Override
+    public void deleteStudent(String idGroup, String idStudent) {
+        userGroupMapper.deleteStudent(idGroup, idStudent);
+    }
 }

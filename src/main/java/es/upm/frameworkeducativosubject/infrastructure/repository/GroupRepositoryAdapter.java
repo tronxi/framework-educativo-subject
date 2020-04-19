@@ -2,6 +2,7 @@ package es.upm.frameworkeducativosubject.infrastructure.repository;
 
 import es.upm.frameworkeducativosubject.domain.model.Group;
 import es.upm.frameworkeducativosubject.infrastructure.repository.mappers.GroupMapper;
+import es.upm.frameworkeducativosubject.infrastructure.repository.mappers.UserGroupMapper;
 import es.upm.frameworkeducativosubject.infrastructure.repository.model.GroupEntity;
 import lombok.RequiredArgsConstructor;
 import org.apache.ibatis.exceptions.PersistenceException;
@@ -15,6 +16,7 @@ import java.util.stream.Collectors;
 public class GroupRepositoryAdapter implements es.upm.frameworkeducativosubject.domain.port.secundary.GroupRepository {
 
     private final GroupMapper groupMapper;
+    private final UserGroupMapper userGroupMapper;
 
     @Override
     public List<Group> getGroupBySubjectId(String subject_id) {
@@ -45,6 +47,11 @@ public class GroupRepositoryAdapter implements es.upm.frameworkeducativosubject.
                 .name(name)
                 .id_subject(subject_id)
                 .build();
+    }
+
+    @Override
+    public List<String> getIdUser(String group_id) {
+        return userGroupMapper.getIdUser(group_id);
     }
 
     private Group groupDAOToGroup(GroupEntity groupEntity) {

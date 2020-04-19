@@ -40,4 +40,10 @@ public class UserMapperInfrastructure {
                 .map(this::userDTOToUser)
                 .collect(Collectors.toList());
     }
+
+    public List<UserDTO> userListTOUserDTOList(List<User> users) {
+        return users.stream()
+                .map(this::userToUserDTO)
+                .collect(Collectors.toList());
+    }
 }

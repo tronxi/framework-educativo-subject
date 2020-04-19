@@ -9,5 +9,6 @@ public interface GroupRepository {
     Group deleteGroupById(String group_id);
     void deleteGroupsBySubjectId(String subject_id) throws Exception;
     Group saveGroup(String name, String subject_id);
+    List<String> getIdUser(String group_id);
 
 }

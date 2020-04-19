@@ -1,14 +1,18 @@
 package es.upm.frameworkeducativosubject.infrastructure.api.rest.resources;
 
+import es.upm.frameworkeducativosubject.domain.model.User;
+import es.upm.frameworkeducativosubject.domain.port.primary.DeleteStudent;
+import es.upm.frameworkeducativosubject.domain.port.primary.GetStudent;
 import es.upm.frameworkeducativosubject.domain.port.primary.LoadStudentGroup;
-import es.upm.frameworkeducativosubject.infrastructure.api.rest.model.StudentDTO;
+import es.upm.frameworkeducativosubject.infrastructure.api.rest.mapper.UserMapperInfrastructure;
+import es.upm.frameworkeducativosubject.infrastructure.api.rest.model.UserDTO;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -18,6 +22,9 @@ import java.util.List;
 public class StudentController {
 
     private final LoadStudentGroup loadStudentGroup;
+    private final DeleteStudent deleteStudent;
+    private final GetStudent getStudent;
+    private final UserMapperInfrastructure userMapperInfrastructure;
 
     @PreAuthorize("hasRole('ADMIN')")
     @PostMapping(value = "/{idSubject}/group/{idGroup}")
@@ -27,6 +34,32 @@ public class StudentController {
         try {
             loadStudentGroup.loadStudentGroup(idSubject, idGroup, idStudents, header);
             return new ResponseEntity(HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity(HttpStatus.BAD_REQUEST);
+        }
+    }
+
+    @PreAuthorize("hasRole('ADMIN')")
+    @DeleteMapping(value = "/{idSubject}/group/{idGroup}/student/{idStudent}")
+    public ResponseEntity deleteStudent(@PathVariable String idSubject, @PathVariable String idGroup,
+                                        @PathVariable String idStudent) {
+        try {
+            deleteStudent.deleteStudent(idSubject, idGroup, idStudent);
+            return new ResponseEntity(HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity(HttpStatus.BAD_REQUEST);
+        }
+    }
+
+    @PreAuthorize("hasRole('ADMIN')")
+    @GetMapping(value = "/{idSubject}/group/{idGroup}", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<List<UserDTO>> getStudent(@PathVariable String idSubject,
+                                                    @PathVariable String idGroup,
+                                                    @RequestHeader("authorization") String header) {
+        try {
+            List<User> users = getStudent.getStudent(idSubject, idGroup, header);
+            List<UserDTO> usersDTO = userMapperInfrastructure.userListTOUserDTOList(users);
+            return new ResponseEntity<>(usersDTO, HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity(HttpStatus.BAD_REQUEST);
         }
