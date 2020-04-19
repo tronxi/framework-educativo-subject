@@ -2,6 +2,7 @@ package es.upm.frameworkeducativosubject.infrastructure.repository
 
 import es.upm.frameworkeducativosubject.domain.model.Group
 import es.upm.frameworkeducativosubject.infrastructure.repository.mappers.GroupMapper
+import es.upm.frameworkeducativosubject.infrastructure.repository.mappers.UserGroupMapper
 import es.upm.frameworkeducativosubject.infrastructure.repository.model.GroupEntity
 import org.apache.ibatis.exceptions.PersistenceException
 import spock.lang.Shared
@@ -12,11 +13,16 @@ class GroupRepositoryAdapterTest extends Specification {
     GroupMapper groupMapper
 
     @Shared
+    UserGroupMapper userGroupMapper
+
+
+    @Shared
     GroupRepositoryAdapter groupRepository
 
     def setup() {
         groupMapper = Mock(GroupMapper)
-        groupRepository = new GroupRepositoryAdapter(groupMapper)
+        userGroupMapper = Mock(UserGroupMapper)
+        groupRepository = new GroupRepositoryAdapter(groupMapper, userGroupMapper)
     }
 
     def "get group by subject id" () {
