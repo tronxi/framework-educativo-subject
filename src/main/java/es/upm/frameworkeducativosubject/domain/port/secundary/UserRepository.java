@@ -7,5 +7,6 @@ import java.util.List;
 public interface UserRepository {
     User getUserByIdent(String ident, String header);
     List<User> getUserListByIdUser(List<String> idUserList, String header);
-    void deleteTeacher(String ident);
+    void deleteTeacher(String id);
+    void deleteStudent(String id);
 }

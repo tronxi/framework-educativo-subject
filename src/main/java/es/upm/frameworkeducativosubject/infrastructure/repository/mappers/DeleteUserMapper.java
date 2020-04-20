@@ -6,6 +6,9 @@ import org.apache.ibatis.annotations.Mapper;
 @Mapper
 public interface DeleteUserMapper {
 
-    @Delete("delete from SUBJECT_USER where ID_USER = #{ident}")
-    void deleteTeacher(String ident);
+    @Delete("delete from SUBJECT_USER where ID_USER = #{id}")
+    void deleteTeacher(String id);
+
+    @Delete("delete from USER_GROUP where ID_USER = #{id}")
+    void deleteStudent(String id);
 }

@@ -32,8 +32,13 @@ public class UserRepositoryAdapter implements UserRepository {
     }
 
     @Override
-    public void deleteTeacher(String ident) {
-        deleteUserMapper.deleteTeacher(ident);
+    public void deleteTeacher(String id) {
+        deleteUserMapper.deleteTeacher(id);
+    }
+
+    @Override
+    public void deleteStudent(String id) {
+        deleteUserMapper.deleteStudent(id);
     }
 
     private User userDAOtoUser(UserEntity userEntity) {

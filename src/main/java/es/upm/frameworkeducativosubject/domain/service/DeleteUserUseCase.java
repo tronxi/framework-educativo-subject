@@ -14,12 +14,12 @@ public class DeleteUserUseCase implements DeleteUser {
     private final UserRepository userRepository;
 
     @Override
-    public void deleteUserByIdent(String ident, List<String> roles) {
+    public void deleteUserByIdent(String id, List<String> roles) {
         if (roles.contains("STUDENT")) {
-            //TODO delete in user_group
+            userRepository.deleteStudent(id);
         }
         if (roles.contains("TEACHER")) {
-            userRepository.deleteTeacher(ident);
+            userRepository.deleteTeacher(id);
         }
     }
 }
