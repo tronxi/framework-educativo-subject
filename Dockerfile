@@ -15,5 +15,6 @@ ENV subject_service subject-service
 ENV profile dev
 ENV rabbit_host localhost
 ENV rabbit_pass guest
+ENV subject_db localhost
 COPY --from="builder" /target/framework-educativo-subject-0.0.1-SNAPSHOT.jar .
-CMD java -jar -Dspring.profiles.active=${profile} -Djasypt.encryptor.password=${clave} framework-educativo-subject-0.0.1-SNAPSHOT.jar --eureka-host=${eureka_host} --subject-service=${subject_service} --spring.rabbitmq.host=${rabbit_host} --spring.rabbitmq.password=${rabbit_pass}
+CMD java -jar -Dspring.profiles.active=${profile} -Djasypt.encryptor.password=${clave} framework-educativo-subject-0.0.1-SNAPSHOT.jar --eureka-host=${eureka_host} --subject-service=${subject_service} --subject-db=${subject_db} --spring.rabbitmq.host=${rabbit_host} --spring.rabbitmq.password=${rabbit_pass}

@@ -68,6 +68,11 @@ spec:
                 configMapKeyRef:
                   name: framework-educativo-config-map
                   key: subject_service
+            - name: subject_db
+                valueFrom:
+                  configMapKeyRef:
+                    name: framework-educativo-config-map
+                    key: subject_db
 ---
 apiVersion: v1
 kind: Service

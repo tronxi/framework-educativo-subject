@@ -6,7 +6,7 @@ spring:
   datasource:
     username: pi
     password: ENC(+Tb6CL+hH5md5GjPcqoz2PRUrl2KopUp)
-    url: jdbc:mysql://104.199.45.227:3306/framework-educativo-subject?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC
+    url: jdbc:mysql://${subject-db}:3306/framework-educativo-subject?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC
     driver-class-name: com.mysql.jdbc.Driver
     initialization-mode: embedded
   application:
