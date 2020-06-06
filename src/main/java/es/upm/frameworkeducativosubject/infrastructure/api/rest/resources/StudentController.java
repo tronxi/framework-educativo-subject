@@ -72,7 +72,7 @@ public class StudentController {
         }
     }
 
-    @PreAuthorize("hasRole('TEACHER')")
+    @PreAuthorize("hasRole('STUDENT') or hasRole('TEACHER') or hasRole('ADMIN')")
     @GetMapping(value = "/student/{studentId}", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<List<SubjectDTO>> getSubjectByStudent(@PathVariable String studentId) {
         List<Subject> subjects = findSubject.findSubjectByStudentId(studentId);
