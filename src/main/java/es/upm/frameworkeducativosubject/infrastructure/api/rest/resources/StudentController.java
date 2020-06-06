@@ -1,10 +1,14 @@
 package es.upm.frameworkeducativosubject.infrastructure.api.rest.resources;
 
+import es.upm.frameworkeducativosubject.domain.model.Subject;
 import es.upm.frameworkeducativosubject.domain.model.User;
 import es.upm.frameworkeducativosubject.domain.port.primary.DeleteStudent;
+import es.upm.frameworkeducativosubject.domain.port.primary.FindSubject;
 import es.upm.frameworkeducativosubject.domain.port.primary.GetStudent;
 import es.upm.frameworkeducativosubject.domain.port.primary.LoadStudentGroup;
+import es.upm.frameworkeducativosubject.infrastructure.api.rest.mapper.SubjectMapperInfrastructure;
 import es.upm.frameworkeducativosubject.infrastructure.api.rest.mapper.UserMapperInfrastructure;
+import es.upm.frameworkeducativosubject.infrastructure.api.rest.model.SubjectDTO;
 import es.upm.frameworkeducativosubject.infrastructure.api.rest.model.UserDTO;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -14,6 +18,7 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping(value = "subject-service/subject")
@@ -24,7 +29,9 @@ public class StudentController {
     private final LoadStudentGroup loadStudentGroup;
     private final DeleteStudent deleteStudent;
     private final GetStudent getStudent;
+    private final FindSubject findSubject;
     private final UserMapperInfrastructure userMapperInfrastructure;
+    private final SubjectMapperInfrastructure subjectMapperInfrastructure;
 
     @PreAuthorize("hasRole('ADMIN')")
     @PostMapping(value = "/{idSubject}/group/{idGroup}")
@@ -63,6 +70,17 @@ public class StudentController {
         } catch (Exception e) {
             return new ResponseEntity(HttpStatus.BAD_REQUEST);
         }
+    }
+
+    @PreAuthorize("hasRole('TEACHER')")
+    @GetMapping(value = "/student/{studentId}", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<List<SubjectDTO>> getSubjectByStudent(@PathVariable String studentId) {
+        List<Subject> subjects = findSubject.findSubjectByStudentId(studentId);
+        List<SubjectDTO> subjectDTOS = subjects.stream()
+                .map(subjectMapperInfrastructure::subjectToSubjectDTO)
+                .collect(Collectors.toList());
+
+        return ResponseEntity.ok(subjectDTOS);
     }
 
 }

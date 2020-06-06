@@ -1,6 +1,7 @@
 package es.upm.frameworkeducativosubject.infrastructure.repository;
 
 import es.upm.frameworkeducativosubject.domain.model.Group;
+import es.upm.frameworkeducativosubject.domain.port.secundary.GroupRepository;
 import es.upm.frameworkeducativosubject.infrastructure.repository.mappers.GroupMapper;
 import es.upm.frameworkeducativosubject.infrastructure.repository.mappers.UserGroupMapper;
 import es.upm.frameworkeducativosubject.infrastructure.repository.model.GroupEntity;
@@ -13,7 +14,7 @@ import java.util.stream.Collectors;
 
 @Repository
 @RequiredArgsConstructor
-public class GroupRepositoryAdapter implements es.upm.frameworkeducativosubject.domain.port.secundary.GroupRepository {
+public class GroupRepositoryAdapter implements GroupRepository {
 
     private final GroupMapper groupMapper;
     private final UserGroupMapper userGroupMapper;
@@ -21,6 +22,13 @@ public class GroupRepositoryAdapter implements es.upm.frameworkeducativosubject.
     @Override
     public List<Group> getGroupBySubjectId(String subject_id) {
         return groupMapper.getGroupBySubjectId(subject_id).stream()
+                .map(this::groupDAOToGroup)
+                .collect(Collectors.toList());
+    }
+
+    @Override
+    public List<Group> getGroupByStudentIdAndSubjectId(String studentId, String subjectId) {
+        return groupMapper.getGroupByStudentIdAndSubjectId(studentId, subjectId).stream()
                 .map(this::groupDAOToGroup)
                 .collect(Collectors.toList());
     }

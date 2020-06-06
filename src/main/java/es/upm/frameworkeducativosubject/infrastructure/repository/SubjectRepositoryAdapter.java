@@ -1,26 +1,38 @@
 package es.upm.frameworkeducativosubject.infrastructure.repository;
 
 import es.upm.frameworkeducativosubject.domain.model.Subject;
+import es.upm.frameworkeducativosubject.domain.port.secundary.SubjectRepository;
 import es.upm.frameworkeducativosubject.infrastructure.repository.mappers.SubjectMapper;
 import es.upm.frameworkeducativosubject.infrastructure.repository.model.SubjectEntity;
 import lombok.RequiredArgsConstructor;
 import org.apache.ibatis.exceptions.PersistenceException;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 @Repository
 @RequiredArgsConstructor
-public class SubjectRepositoryAdapter implements es.upm.frameworkeducativosubject.domain.port.secundary.SubjectRepository {
+public class SubjectRepositoryAdapter implements SubjectRepository {
 
     private final SubjectMapper subjectMapper;
 
     @Override
     public Subject getSubjectById(String id) {
-        return subjectDAOToSubject(subjectMapper.getSubjectById(id));
+        return subjectEntityToSubject(subjectMapper.getSubjectById(id));
     }
 
     @Override
     public Subject getSubjectByNameYear(String name, String year) {
-        return subjectDAOToSubject(subjectMapper.getSubjectByNameYear(name, year));
+        return subjectEntityToSubject(subjectMapper.getSubjectByNameYear(name, year));
+    }
+
+    @Override
+    public List<Subject> getSubjectByStudentId(String studentId) {
+        List<SubjectEntity> subjectEntityList = subjectMapper.getSubjectByStudentId(studentId);
+        return subjectEntityList.stream()
+                .map(this::subjectEntityToSubject)
+                .collect(Collectors.toList());
     }
 
 
@@ -51,7 +63,7 @@ public class SubjectRepositoryAdapter implements es.upm.frameworkeducativosubjec
         subjectMapper.deleteSubjectById(id);
     }
 
-    private Subject subjectDAOToSubject(SubjectEntity subjectEntity) {
+    private Subject subjectEntityToSubject(SubjectEntity subjectEntity) {
         return Subject.builder()
                 .id_subject(subjectEntity.getIdSubject())
                 .name(subjectEntity.getName())

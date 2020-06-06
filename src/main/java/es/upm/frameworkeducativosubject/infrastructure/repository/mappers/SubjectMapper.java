@@ -6,12 +6,20 @@ import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.annotations.Update;
 
+import java.util.List;
+
 @Mapper
 public interface SubjectMapper {
 
     @Select("select ID_SUBJECT, NAME, YEAR  " +
             "FROM SUBJECT WHERE ID_SUBJECT = #{id}")
     SubjectEntity getSubjectById(String id);
+
+    @Select("SELECT ID_SUBJECT, NAME, YEAR  from SUBJECT where id_subject in " +
+            "(SELECT ID_SUBJECT FROM GROUPS WHERE ID_GROUP IN (" +
+            "SELECT ID_GROUP FROM USER_GROUP WHERE ID_USER = #{studentId})" +
+            ")")
+    List<SubjectEntity> getSubjectByStudentId(String studentId);
 
     @Select("select ID_SUBJECT, NAME, YEAR  " +
             "FROM SUBJECT WHERE NAME = #{name} and YEAR = #{year}")

@@ -33,4 +33,14 @@ public class FindSubjectUseCase implements FindSubject {
         subject.setGroups(group);
         return subject;
     }
+
+    @Override
+    public List<Subject> findSubjectByStudentId(String studentId) {
+        List<Subject> subjectList = subjectRepository.getSubjectByStudentId(studentId);
+        subjectList.forEach(subject -> {
+            List<Group> groupList = groupRepository.getGroupByStudentIdAndSubjectId(studentId, subject.getId_subject());
+            subject.setGroups(groupList);
+        });
+        return subjectList;
+    }
 }
