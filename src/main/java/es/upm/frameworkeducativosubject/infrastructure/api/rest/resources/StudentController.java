@@ -33,7 +33,7 @@ public class StudentController {
     private final UserMapperInfrastructure userMapperInfrastructure;
     private final SubjectMapperInfrastructure subjectMapperInfrastructure;
 
-    @PreAuthorize("hasRole('ADMIN')")
+    @PreAuthorize("hasRole('TEACHER') or hasRole('ADMIN')")
     @PostMapping(value = "/{idSubject}/group/{idGroup}")
     public ResponseEntity loadStudent(@PathVariable String idSubject, @PathVariable String idGroup,
                                       @RequestBody List<String> idStudents,
@@ -58,7 +58,7 @@ public class StudentController {
         }
     }
 
-    @PreAuthorize("hasRole('ADMIN')")
+    @PreAuthorize("hasRole('TEACHER') or hasRole('ADMIN')")
     @GetMapping(value = "/{idSubject}/group/{idGroup}", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<List<UserDTO>> getStudent(@PathVariable String idSubject,
                                                     @PathVariable String idGroup,

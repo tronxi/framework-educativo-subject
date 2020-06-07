@@ -43,7 +43,7 @@ public class SubjectController {
         }
     }
 
-    @PreAuthorize("hasRole('ADMIN')")
+    @PreAuthorize("hasRole('TEACHER') or hasRole('ADMIN')")
     @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE, params = {"id"})
     public ResponseEntity<SubjectDTO> getSubject(@RequestParam String id) {
         Subject subject = findSubject.findSubjectById(id);
@@ -51,7 +51,7 @@ public class SubjectController {
         return new ResponseEntity<>(subjectDTO, HttpStatus.OK);
     }
 
-    @PreAuthorize("hasRole('ADMIN')")
+    @PreAuthorize("hasRole('TEACHER') or hasRole('ADMIN')")
     @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE, params = {"name", "year"})
     public ResponseEntity<SubjectDTO> getSubject(@RequestParam String name, @RequestParam String year) {
         Subject subject = findSubject.findSubjectByNameYear(name, year);
@@ -59,7 +59,7 @@ public class SubjectController {
         return new ResponseEntity<>(subjectDTO, HttpStatus.OK);
     }
 
-    @PreAuthorize("hasRole('ADMIN')")
+    @PreAuthorize("hasRole('TEACHER') or hasRole('ADMIN')")
     @PutMapping()
     public ResponseEntity updateSubject(@RequestBody SubjectDTO subjectDTO) {
         Subject subject = subjectMapperInfrastructure.subjectDTOToSubject(subjectDTO);
