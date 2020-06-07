@@ -8,4 +8,6 @@ public interface FindSubject {
     Subject findSubjectById(String id);
     Subject findSubjectByNameYear(String name, String year);
     List<Subject> findSubjectByStudentId (String studentId);
+    List<Subject> findSubjectByTeacherId (String teacherId);
+
 }

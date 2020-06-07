@@ -35,6 +35,14 @@ public class SubjectRepositoryAdapter implements SubjectRepository {
                 .collect(Collectors.toList());
     }
 
+    @Override
+    public List<Subject> getSubjectByTeacherId(String teacherId) {
+        List<SubjectEntity> subjectEntityList = subjectMapper.getSubjectByTeacherId(teacherId);
+        return subjectEntityList.stream()
+                .map(this::subjectEntityToSubject)
+                .collect(Collectors.toList());
+    }
+
 
     @Override
     public void saveSubject(Subject subject) throws Exception {

@@ -8,6 +8,7 @@ import es.upm.frameworkeducativosubject.domain.port.secundary.SubjectRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.Collections;
 import java.util.List;
 
 @Service
@@ -40,6 +41,15 @@ public class FindSubjectUseCase implements FindSubject {
         subjectList.forEach(subject -> {
             List<Group> groupList = groupRepository.getGroupByStudentIdAndSubjectId(studentId, subject.getId_subject());
             subject.setGroups(groupList);
+        });
+        return subjectList;
+    }
+
+    @Override
+    public List<Subject> findSubjectByTeacherId(String teacherId) {
+        List<Subject> subjectList = subjectRepository.getSubjectByTeacherId(teacherId);
+        subjectList.forEach(subject -> {
+            subject.setGroups(Collections.emptyList());
         });
         return subjectList;
     }

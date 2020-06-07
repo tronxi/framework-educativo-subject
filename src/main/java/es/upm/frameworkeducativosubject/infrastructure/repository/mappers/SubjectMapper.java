@@ -21,6 +21,10 @@ public interface SubjectMapper {
             ")")
     List<SubjectEntity> getSubjectByStudentId(String studentId);
 
+    @Select("SELECT ID_SUBJECT, NAME, YEAR  from SUBJECT where id_subject in " +
+            "(SELECT ID_SUBJECT FROM SUBJECT_USER WHERE ID_USER = #{studentId})")
+    List<SubjectEntity> getSubjectByTeacherId(String studentId);
+
     @Select("select ID_SUBJECT, NAME, YEAR  " +
             "FROM SUBJECT WHERE NAME = #{name} and YEAR = #{year}")
     SubjectEntity getSubjectByNameYear(String name, String year);

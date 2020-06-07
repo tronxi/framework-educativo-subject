@@ -15,6 +15,7 @@ server:
   port: 8082
 eureka-host: http://localhost
 subject-service: subject-service
+subject-db: 192.168.1.7
 eureka:
   instance:
     status-page-url-path: /actuator/health
