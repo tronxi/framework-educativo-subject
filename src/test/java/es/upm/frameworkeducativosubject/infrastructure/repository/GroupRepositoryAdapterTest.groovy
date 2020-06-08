@@ -1,6 +1,7 @@
 package es.upm.frameworkeducativosubject.infrastructure.repository
 
 import es.upm.frameworkeducativosubject.domain.model.Group
+import es.upm.frameworkeducativosubject.infrastructure.event.publisher.DeleteGroupPublisher
 import es.upm.frameworkeducativosubject.infrastructure.repository.mappers.GroupMapper
 import es.upm.frameworkeducativosubject.infrastructure.repository.mappers.UserGroupMapper
 import es.upm.frameworkeducativosubject.infrastructure.repository.model.GroupEntity
@@ -15,6 +16,9 @@ class GroupRepositoryAdapterTest extends Specification {
     @Shared
     UserGroupMapper userGroupMapper
 
+    @Shared
+    DeleteGroupPublisher deleteGroupPublisher
+
 
     @Shared
     GroupRepositoryAdapter groupRepository
@@ -22,7 +26,8 @@ class GroupRepositoryAdapterTest extends Specification {
     def setup() {
         groupMapper = Mock(GroupMapper)
         userGroupMapper = Mock(UserGroupMapper)
-        groupRepository = new GroupRepositoryAdapter(groupMapper, userGroupMapper)
+        deleteGroupPublisher = Mock(DeleteGroupPublisher)
+        groupRepository = new GroupRepositoryAdapter(groupMapper, userGroupMapper, deleteGroupPublisher)
     }
 
     def "get group by subject id" () {
@@ -59,6 +64,7 @@ class GroupRepositoryAdapterTest extends Specification {
     def "delete group by subject id" () {
         given:
         String subject_id = "1"
+        groupMapper.getGroupBySubjectId(subject_id) >> Collections.emptyList()
         when:
         groupRepository.deleteGroupsBySubjectId(subject_id)
         then:

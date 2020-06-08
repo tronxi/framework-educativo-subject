@@ -1,6 +1,8 @@
 package es.upm.frameworkeducativosubject.infrastructure.repository
 
 import es.upm.frameworkeducativosubject.domain.model.Subject
+import es.upm.frameworkeducativosubject.infrastructure.event.publisher.DeleteGroupPublisher
+import es.upm.frameworkeducativosubject.infrastructure.repository.mappers.GroupMapper
 import es.upm.frameworkeducativosubject.infrastructure.repository.mappers.SubjectMapper
 import es.upm.frameworkeducativosubject.infrastructure.repository.model.SubjectEntity
 import org.apache.ibatis.exceptions.PersistenceException
@@ -13,11 +15,21 @@ class SubjectRepositoryAdapterTest extends Specification {
     SubjectMapper subjectMapper
 
     @Shared
+    GroupMapper groupMapper
+
+    @Shared
+    DeleteGroupPublisher deleteGroupPublisher
+
+    @Shared
     SubjectRepositoryAdapter subjectRepository
+
 
     def setup() {
         subjectMapper = Mock(SubjectMapper)
-        subjectRepository = new SubjectRepositoryAdapter(subjectMapper)
+        groupMapper = Mock(GroupMapper)
+        deleteGroupPublisher = Mock(DeleteGroupPublisher)
+
+        subjectRepository = new SubjectRepositoryAdapter(subjectMapper, groupMapper, deleteGroupPublisher)
     }
 
     def "get subject by id" () {
@@ -109,6 +121,7 @@ class SubjectRepositoryAdapterTest extends Specification {
     def "delete subject by id" () {
         given:
         String id = "1"
+        groupMapper.getGroupBySubjectId(id) >> Collections.emptyList()
         when:
         subjectRepository.deleteSubjectById(id)
         then:
