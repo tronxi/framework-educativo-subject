@@ -1,8 +1,8 @@
-package es.upm.frameworkeducativosubject.infrastructure.api.event;
+package es.upm.frameworkeducativosubject.infrastructure.event.handler;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import es.upm.frameworkeducativosubject.domain.port.primary.DeleteUser;
-import es.upm.frameworkeducativosubject.infrastructure.api.event.model.DeletedUser;
+import es.upm.frameworkeducativosubject.infrastructure.event.model.DeletedUser;
 import lombok.RequiredArgsConstructor;
 import org.springframework.amqp.rabbit.annotation.RabbitHandler;
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
@@ -13,7 +13,7 @@ import java.io.IOException;
 @Component
 @RequiredArgsConstructor
 @RabbitListener(queues = "user.deleted.subject")
-public class DeletedUserEvent {
+public class DeletedUserEventHandler {
 
     private final ObjectMapper objectMapper;
     private final DeleteUser deleteUser;
@@ -22,7 +22,7 @@ public class DeletedUserEvent {
     public void deletedUser(String message) {
         try {
             DeletedUser user = objectMapper.readValue(message, DeletedUser.class);
-            deleteUser.deleteUserByIdent(user.getId_user(), user.getRoles());
+            deleteUser.deleteUserById(user.getId_user(), user.getRoles());
         } catch (IOException e) {
             throw new RuntimeException("Error parsing object");
         }

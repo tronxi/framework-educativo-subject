@@ -14,6 +14,10 @@ public interface GroupMapper {
             "FROM GROUPS WHERE ID_SUBJECT = #{subject_id}")
     List<GroupEntity> getGroupBySubjectId(String subject_id);
 
+    @Select("select ID_GROUP, ID_SUBJECT, NAME_GROUP " +
+            "FROM GROUPS WHERE ID_GROUP = #{groupId}")
+    GroupEntity getGroupByGroupId(String groupId);
+
     @Select("SELECT ID_GROUP, ID_SUBJECT, NAME_GROUP FROM GROUPS WHERE ID_GROUP IN (" +
             "SELECT ID_GROUP FROM USER_GROUP WHERE ID_USER = #{studentId} AND ID_SUBJECT = #{subjectId})")
     List<GroupEntity> getGroupByStudentIdAndSubjectId(String studentId, String subjectId);

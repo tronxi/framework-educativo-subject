@@ -4,6 +4,6 @@ import java.util.List;
 
 public interface DeleteUser {
 
-    void deleteUserByIdent(String id, List<String> roles);
+    void deleteUserById(String id, List<String> roles);
 
 }

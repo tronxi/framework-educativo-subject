@@ -15,7 +15,10 @@ public class RabbitmqConfig {
         return new Declarables(
                 new FanoutExchange("user.deleted", true, false, null),
                 new Queue("user.deleted.subject"),
-                new Binding("user.deleted.subject", Binding.DestinationType.QUEUE, "user.deleted", "", null));
+                new Binding("user.deleted.subject", Binding.DestinationType.QUEUE, "user.deleted", "", null),
+
+                new FanoutExchange("group.deleted", true, false, null),
+                new FanoutExchange("userGroup.deleted", true, false, null));
     }
 
 }

@@ -2,7 +2,10 @@ package es.upm.frameworkeducativosubject.infrastructure.repository;
 
 import es.upm.frameworkeducativosubject.domain.model.Subject;
 import es.upm.frameworkeducativosubject.domain.port.secundary.SubjectRepository;
+import es.upm.frameworkeducativosubject.infrastructure.event.publisher.DeleteGroupPublisher;
+import es.upm.frameworkeducativosubject.infrastructure.repository.mappers.GroupMapper;
 import es.upm.frameworkeducativosubject.infrastructure.repository.mappers.SubjectMapper;
+import es.upm.frameworkeducativosubject.infrastructure.repository.model.GroupEntity;
 import es.upm.frameworkeducativosubject.infrastructure.repository.model.SubjectEntity;
 import lombok.RequiredArgsConstructor;
 import org.apache.ibatis.exceptions.PersistenceException;
@@ -16,6 +19,8 @@ import java.util.stream.Collectors;
 public class SubjectRepositoryAdapter implements SubjectRepository {
 
     private final SubjectMapper subjectMapper;
+    private final GroupMapper groupMapper;
+    private final DeleteGroupPublisher deleteGroupPublisher;
 
     @Override
     public Subject getSubjectById(String id) {
@@ -68,7 +73,13 @@ public class SubjectRepositoryAdapter implements SubjectRepository {
 
     @Override
     public void deleteSubjectById(String id) {
+        deleteGroups(id);
         subjectMapper.deleteSubjectById(id);
+    }
+
+    private void deleteGroups(String subjectId) {
+        List<GroupEntity> groupEntityList = groupMapper.getGroupBySubjectId(subjectId);
+        groupEntityList.forEach(deleteGroupPublisher::deleteGroupEvent);
     }
 
     private Subject subjectEntityToSubject(SubjectEntity subjectEntity) {

@@ -1,4 +1,4 @@
-package es.upm.frameworkeducativosubject.infrastructure.api.event.model;
+package es.upm.frameworkeducativosubject.infrastructure.event.model;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

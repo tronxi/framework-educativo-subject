@@ -14,7 +14,7 @@ public class DeleteUserUseCase implements DeleteUser {
     private final UserRepository userRepository;
 
     @Override
-    public void deleteUserByIdent(String id, List<String> roles) {
+    public void deleteUserById(String id, List<String> roles) {
         if (roles.contains("STUDENT")) {
             userRepository.deleteStudent(id);
         }
