@@ -20,7 +20,7 @@ public class JwtService {
     private static final String ROLES = "roles";
     private static final String ISSUER = "framework-educativo";
     @Value("${secret-token}")
-    private static String SECRET;
+    private String SECRET;
 
     public boolean isBearer(String authorization) {
         return authorization != null && authorization.startsWith(BEARER) && authorization.split("\\.").length == 3;
