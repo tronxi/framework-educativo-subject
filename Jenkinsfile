@@ -5,10 +5,16 @@ pipeline {
         DOCKER_HUB_PASSWORD = credentials('DOCKER_HUB_PASSWORD')
     }
     stages {
+        stage('Test') {
+            steps {
+                sh '''
+                    mvn test
+                '''
+            }
+        }
         stage('Build') {
             steps {
                 sh '''
-                    echo $DOCKER_HUB_PASSWORD
                     docker build -t tronxi/framework-educativo-subject:${SUBJECT_TAG} .
                 '''
             }
