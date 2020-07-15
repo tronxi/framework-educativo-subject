@@ -19,11 +19,11 @@ spec:
           image: tronxi/framework-educativo-subject:${SUBJECT_TAG}
           resources:
             limits:
-              cpu: "0.4"
-              memory: "512Mi"
+              cpu: "0.9"
+              memory: "900Mi"
             requests:
-              cpu: "0.2"
-              memory: "400Mi"
+              cpu: "0.8"
+              memory: "850Mi"
           livenessProbe:
             httpGet:
               path: /actuator/health
